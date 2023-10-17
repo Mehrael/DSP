@@ -68,4 +68,5 @@ btn.pack(side=TOP,padx=10,pady=10 )
 
 btn2=Button(root,text='Draw Signal', command=lambda:draw_signal())
 btn2.pack(side=TOP, padx=20, pady=20)
+
 mainloop()

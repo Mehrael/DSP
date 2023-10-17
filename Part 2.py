@@ -2,10 +2,9 @@ import tkinter
 from tkinter import *
 from tkinter.ttk import *
 
-root =Tk()
+root = Tk()
 root.title('Input Signal')
 root.geometry('300x450')
-
 
 function = IntVar()
 
@@ -16,7 +15,8 @@ def get_values():
         analog = analog_freq.get()
         sampling = sampling_freq.get()
         shift = phase_shift.get()
-        # err.config(text="Function: "+str(fun)+" A"+str(A)+" analog="+str(analog)+" sampling"+str(sampling)+"shift"+str(shift))
+        return fun, A, analog, sampling, shift
+
 
 def validation():
     text_err = ""
@@ -46,40 +46,41 @@ def validation():
     else:
         return False
 
+
 err = tkinter.Label(root, text="")
 err.pack(padx=5, pady=5)
 
-label =tkinter.Label(root,text="Function ")
+label = tkinter.Label(root, text="Function ")
 label.pack()
 
-Radiobutton(root,text="Cos()", variable=function, value=0,command=lambda :function.get()).pack(padx=5,pady=5)
-Radiobutton(root,text="Sin()", variable=function, value=1,command=lambda :function.get()).pack(padx=5,pady=5)
+Radiobutton(root, text="Cos()", variable=function, value=0, command=lambda: function.get()).pack(padx=5, pady=5)
+Radiobutton(root, text="Sin()", variable=function, value=1, command=lambda: function.get()).pack(padx=5, pady=5)
 
-label =tkinter.Label(root,text="Amplitude")
-label.pack(padx=5,pady=5)
+label = tkinter.Label(root, text="Amplitude")
+label.pack(padx=5, pady=5)
 
 amplitude = tkinter.Entry(root)
-amplitude.pack(padx=5,pady=5)
+amplitude.pack(padx=5, pady=5)
 
-label =tkinter.Label(root,text="Analog Frequency")
-label.pack(padx=5,pady=5)
+label = tkinter.Label(root, text="Analog Frequency")
+label.pack(padx=5, pady=5)
 
 analog_freq = tkinter.Entry(root)
-analog_freq.pack(padx=5,pady=5)
+analog_freq.pack(padx=5, pady=5)
 
-label =tkinter.Label(root,text="Sampling Frequency")
-label.pack(padx=5,pady=5)
+label = tkinter.Label(root, text="Sampling Frequency")
+label.pack(padx=5, pady=5)
 
 sampling_freq = tkinter.Entry(root)
-sampling_freq.pack(padx=5,pady=5)
+sampling_freq.pack(padx=5, pady=5)
 
-label =tkinter.Label(root,text="Phase Shift")
-label.pack(padx=5,pady=5)
+label = tkinter.Label(root, text="Phase Shift")
+label.pack(padx=5, pady=5)
 
 phase_shift = tkinter.Entry(root)
-phase_shift.pack(padx=5,pady=5)
+phase_shift.pack(padx=5, pady=5)
 
-btn= Button(root, text='Draw',command=get_values)
-btn.pack(padx=5,pady=5)
+btn = Button(root, text='Draw', command=get_values)
+btn.pack(padx=5, pady=5)
 
 root.mainloop()

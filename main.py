@@ -1,16 +1,14 @@
-# This is a sample Python script.
+import tkinter
+from tkinter import *
+from tkinter.ttk import *
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+root = Tk()
+root.title('Main Screen')
+root.geometry('300x450')
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+btn= Button(root, text='Discrete & Continuous Signals')
+btn.pack(side=TOP,padx=10,pady=10 )
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+btn2=Button(root,text='Discrete Signal')
+btn2.pack(side=TOP, padx=20, pady=20)
