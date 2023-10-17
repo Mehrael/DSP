@@ -2,7 +2,7 @@ from tkinter import *
 from tkinter.ttk import *
 from tkinter.filedialog import askopenfile
 import numpy as np
-from scipy.interpolate import interp1d
+from scipy.interpolate import make_interp_spline
 import matplotlib.pyplot as plt
 
 
@@ -41,6 +41,24 @@ def open_file():
             sampleAmp.append(float(x[1]))
 
 def draw_signal():
+    fig, axs = plt.subplots(1, 2)
+
+    axs[0].set_title('Discrete Signal')
+    for (i, j) in zip(index, sampleAmp):
+        axs[0].plot([i, i], [0, j], color='red')
+    axs[0].scatter(index,sampleAmp)
+    axs[0].axhline(0, color='black',linewidth=0.5)
+    axs[0].axvline(0, color='black',linewidth=0.5)
+    axs[0].set_xlabel('No. of Samples')
+    axs[0].set_ylabel('Amplitude')
+
+    axs[1].plot(index, sampleAmp)
+    axs[1].set_title('Continuous Signal')
+    axs[1].axhline(0, color='black',linewidth=0.5)
+    axs[1].axvline(0, color='black',linewidth=0.5)
+    axs[1].set_xlabel('Time')
+    axs[1].set_ylabel('Amplitude')
+    plt.show()
     return
 
 
