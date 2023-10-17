@@ -7,7 +7,8 @@ import matplotlib.pyplot as plt
 
 
 root =Tk()
-root.geometry('200x200')
+root.title('Drawing Signals')
+root.geometry('250x150')
 
 signalType=None
 isPeriodic=None
