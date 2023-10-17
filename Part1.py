@@ -5,11 +5,6 @@ import numpy as np
 from scipy.interpolate import make_interp_spline
 import matplotlib.pyplot as plt
 
-
-root =Tk()
-root.title('Drawing Signals')
-root.geometry('250x150')
-
 signalType=None
 isPeriodic=None
 N=0
@@ -63,10 +58,15 @@ def draw_signal():
     return
 
 
-btn= Button(root, text='Open', command=lambda:open_file())
-btn.pack(side=TOP,padx=10,pady=10 )
+def disc_con():
+    root = Tk()
+    root.title('Drawing Signals')
+    root.geometry('250x150')
 
-btn2=Button(root,text='Draw Signal', command=lambda:draw_signal())
-btn2.pack(side=TOP, padx=20, pady=20)
+    btn= Button(root, text='Open', command=lambda:open_file())
+    btn.pack(side=TOP,padx=10,pady=10 )
 
-mainloop()
+    btn2=Button(root,text='Draw Signal', command=lambda:draw_signal())
+    btn2.pack(side=TOP, padx=20, pady=20)
+
+    mainloop()
