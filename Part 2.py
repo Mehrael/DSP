@@ -1,6 +1,8 @@
 import tkinter
 from tkinter import *
 from tkinter.ttk import *
+import numpy as np
+import matplotlib.pyplot as plt
 
 root = Tk()
 root.title('Input Signal')
@@ -11,11 +13,33 @@ function = IntVar()
 def get_values():
     if validation():
         fun = function.get()
-        A = amplitude.get()
-        analog = analog_freq.get()
-        sampling = sampling_freq.get()
-        shift = phase_shift.get()
-        return fun, A, analog, sampling, shift
+        A = int(amplitude.get())
+        analog = int(analog_freq.get())
+        sampling = int(sampling_freq.get())
+        shift = float(phase_shift.get())
+        # Define the parameters
+        omega = 1
+        phi = shift
+
+        T = 1.0 / analog
+        Ts = 1.0 / sampling
+        t = np.arange(0, 10, Ts)
+
+        # Calculate the signal
+        if fun == 1:
+            y = A * np.sin(2 * np.pi * analog * t + shift)
+        elif fun == 0:
+            y = A * np.cos(2 * np.pi * analog * t + shift)
+
+        # Plot the signal
+        plt.figure()
+        plt.plot(t, y)
+        # plt.title(f'{wave_type.capitalize()} Wave: A={A}, theta={shift}, f={f}, fs={fs}')
+        plt.xlabel('Time')
+        plt.ylabel('Amplitude')
+        plt.grid(True)
+        plt.show()
+        return
 
 
 def validation():
@@ -80,7 +104,7 @@ label.pack(padx=5, pady=5)
 phase_shift = tkinter.Entry(root)
 phase_shift.pack(padx=5, pady=5)
 
-btn = Button(root, text='Draw', command=get_values)
+btn = Button(root, text='Draw', command=lambda:get_values())
 btn.pack(padx=5, pady=5)
 
 root.mainloop()
