@@ -1,0 +1,52 @@
+from tkinter import *
+from tkinter.ttk import *
+from tkinter.filedialog import askopenfile
+import numpy as np
+from scipy.interpolate import interp1d
+import matplotlib.pyplot as plt
+
+
+root =Tk()
+root.geometry('200x200')
+
+signalType=None
+isPeriodic=None
+N=0
+index=[]
+sampleAmp=[]
+
+def open_file():
+    file=askopenfile(mode='r',filetypes=[('Text files','*.txt')])
+    if file is not None:
+        content=file.readlines()
+        for i,x in enumerate(content):
+            print(x)
+            if i==0 and int(x) == 0:
+               signalType=0
+               continue
+            elif i==0 and int(x)==1:
+                signalType=1
+                continue
+            if i==1 and int(x)==0:
+                isPeriodic=False
+                continue
+            elif i==1 and int(x)==1:
+                isPeriodic=True
+                continue
+            if i==2:
+                N=int(x)
+                continue
+            x=x.split()
+            index.append(int(x[0]))
+            sampleAmp.append(float(x[1]))
+
+def draw_signal():
+    return
+
+
+btn= Button(root, text='Open', command=lambda:open_file())
+btn.pack(side=TOP,padx=10,pady=10 )
+
+btn2=Button(root,text='Draw Signal', command=lambda:draw_signal())
+btn2.pack(side=TOP, padx=20, pady=20)
+mainloop()
