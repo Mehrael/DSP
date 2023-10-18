@@ -79,17 +79,23 @@ def get_values():
 def validation():
     text_err = ""
     try:
-        int(amplitude.get())
+        x = int(amplitude.get())
+        if x == 0 or x == NONE:
+            raise ValueError
     except ValueError:
-        text_err += "The Amplitude Must be an Integer\n"
+        text_err += "The Amplitude Must be an Integer value and not 0\n"
 
     try:
-        int(analog_freq.get())
+        x = int(analog_freq.get())
+        if x == 0 or x == NONE:
+            raise ValueError
     except ValueError:
         text_err += "The Analog Frequency Must be an Integer\n"
 
     try:
-        int(sampling_freq.get())
+        x = int(sampling_freq.get())
+        if x == 0 or x == NONE:
+            raise ValueError
     except ValueError:
         text_err += "The Sampling Frequency Must be an Integer\n"
 
