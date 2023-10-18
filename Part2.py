@@ -3,7 +3,11 @@ from tkinter import *
 from tkinter.ttk import *
 import numpy as np
 import matplotlib.pyplot as plt
+from comparesignals import SignalSamplesAreEqual
 
+
+SinFile='SinOutput.txt'
+CosFile='CosOutput.txt'
 
 root = Tk()
 root.title('Input Signal')
@@ -46,6 +50,7 @@ phase_shift.pack(padx=5, pady=5)
 btn = Button(root, text='Draw', command=lambda:get_values())
 btn.pack(padx=5, pady=5)
 
+
 def get_values():
     if validation():
         fun = function.get()
@@ -61,10 +66,11 @@ def get_values():
         if fun == 1:
             y = A * np.sin(2 * np.pi * F * t + theta)
             fun_name = "Sin"
+            file_name=SinFile
         else:
             y = A * np.cos(2 * np.pi * F * t + theta)
             fun_name = "Cos"
-
+            file_name=CosFile
         # Plot the signal
         plt.figure()
         plt.scatter(t, y)
@@ -73,6 +79,7 @@ def get_values():
         plt.ylabel('Amplitude')
         plt.grid(True)
         plt.show()
+        SignalSamplesAreEqual(file_name,len(y),y)
         return
 
 
@@ -109,47 +116,5 @@ def validation():
         return True
     else:
         return False
-
-# def disc():
-# root = Tk()
-# root.title('Input Signal')
-# root.geometry('300x450')
-#
-#
-# err = tkinter.Label(root, text="")
-# err.pack(padx=5, pady=5)
-#
-# label = tkinter.Label(root, text="Function ")
-# label.pack()
-#
-# Radiobutton(root, text="Cos()", variable=function, value=0, command=lambda: function.get()).pack(padx=5, pady=5)
-# Radiobutton(root, text="Sin()", variable=function, value=1, command=lambda: function.get()).pack(padx=5, pady=5)
-#
-# label = tkinter.Label(root, text="Amplitude")
-# label.pack(padx=5, pady=5)
-#
-# amplitude = tkinter.Entry(root)
-# amplitude.pack(padx=5, pady=5)
-#
-# label = tkinter.Label(root, text="Analog Frequency")
-# label.pack(padx=5, pady=5)
-#
-# analog_freq = tkinter.Entry(root)
-# analog_freq.pack(padx=5, pady=5)
-#
-# label = tkinter.Label(root, text="Sampling Frequency")
-# label.pack(padx=5, pady=5)
-#
-# sampling_freq = tkinter.Entry(root)
-# sampling_freq.pack(padx=5, pady=5)
-#
-# label = tkinter.Label(root, text="Phase Shift")
-# label.pack(padx=5, pady=5)
-#
-# phase_shift = tkinter.Entry(root)
-# phase_shift.pack(padx=5, pady=5)
-#
-# btn = Button(root, text='Draw', command=lambda:get_values())
-# btn.pack(padx=5, pady=5)
 
 root.mainloop()
