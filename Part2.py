@@ -72,13 +72,40 @@ def get_values():
             fun_name = "Cos"
             file_name=CosFile
         # Plot the signal
-        plt.figure()
-        plt.scatter(t, y)
-        plt.title(f'{fun_name} Wave: A={A}, theta={theta}, f={F}, fs={Fs}')
-        plt.xlabel('Time')
-        plt.ylabel('Amplitude')
-        plt.grid(True)
+        fig, axs = plt.subplots(1, 2)
+        axs[0].set_title('Discrete Signal')
+        axs[0].set_title('Discrete Signal')
+        # for (i, j) in zip(t, y):
+        #     axs[0].plot([i, i], [0, j], color='red')
+        axs[0].scatter(t,y)
+        axs[0].axhline(0, color='black',linewidth=0.5)
+        axs[0].axvline(0, color='black',linewidth=0.5)
+        axs[0].set_xlabel('No. of Samples')
+        axs[0].set_ylabel('Amplitude')
+
+        axs[1].plot(t, y)
+        axs[1].set_title('Continuous Signal')
+        axs[1].axhline(0, color='black',linewidth=0.5)
+        axs[1].axvline(0, color='black',linewidth=0.5)
+        axs[1].set_xlabel('Time')
+        axs[1].set_ylabel('Amplitude')
         plt.show()
+        # plt.figure()
+        # plt.scatter(t, y)
+        # plt.title(f'{fun_name} Wave: A={A}, theta={theta}, f={F}, fs={Fs}')
+        # plt.xlabel('Time')
+        # plt.ylabel('Amplitude')
+        # plt.grid(True)
+        # plt.show()
+
+        # # Plot the signal
+        # plt.figure()
+        # plt.plot(t, y)
+        # plt.title(f'{fun_name} Wave: A={A}, theta={theta}, f={F}, fs={Fs}')
+        # plt.xlabel('Time')
+        # plt.ylabel('Amplitude')
+        # plt.grid(True)
+        # plt.show()
         SignalSamplesAreEqual(file_name,len(y),y)
         return
 
