@@ -26,3 +26,6 @@ OptionMenu(root,arth_op,*options).pack(side=TOP, padx=10, pady=5)
 Button(root,text='Signals with Arithmatic Operations',command=lambda: set_op(arth_op.get())).pack(side=TOP, padx=10, pady=10)
 
 mainloop()
+print(len(sample_signal1))
+print(len(sample_signal2))
+print(sample_result)

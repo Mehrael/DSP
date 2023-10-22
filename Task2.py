@@ -3,6 +3,7 @@ from ImpFunctions import *
 import tkinter
 from tkinter import *
 from tkinter.ttk import *
+from itertools import zip_longest
 from tkinter.filedialog import askopenfile
 import numpy as np
 import matplotlib.pyplot as plt
@@ -10,13 +11,19 @@ from comparesignals import SignalSamplesAreEqual
 
 index_signal1=[]
 sample_signal1=[]
+
 index_signal2=[]
 sample_signal2=[]
+
+index_result=[]
+sample_result=[]
 op = ""
 def set_op(x):
     op = x
     if op=="Addition" or op=="Subtraction":
         add_sub(op)
+        # print("Set Op fun Signal1 : ",len(sample_signal1))
+        # print("Set Op fun Signal2 : ",len(sample_signal2))
     elif op == "Multiplication" or op == "Shifting":
         mul_shift(op)
     elif op == "Squaring" or op == "Accumulation":
@@ -27,13 +34,27 @@ def set_op(x):
         messagebox.showinfo("","Select an Operation please")
 
 
-def set_lists():
-    index_signal1,sample_signal1=open_file()
-    print(len(sample_signal1))
+def set_signal1():
+    index_signal1[:],sample_signal1[:]=open_file()
+    # print("Set Signal1: ",len(sample_signal1))
+    return
+def set_signal2(op):
+    index_signal2[:],sample_signal2[:]=open_file()
+    # print("Set Signal2: ",len(sample_signal2))
+    if len(sample_signal1)!=len(sample_signal2) and op=="Addition":
+        pairs = zip_longest(sample_signal1, sample_signal2, fillvalue=0)
+        sample_result[:] = [a + b for a, b in pairs]
+    if op=="Addition":
+        sample_result[:] = [a + b for a, b in zip(sample_signal1, sample_signal2)]
+    if len(sample_signal1)!=len(sample_signal2) and op=="Subtraction":
+        pairs = zip_longest(sample_signal1, sample_signal2, fillvalue=0)
+        sample_result[:] = [a - b for a, b in pairs]
+    if op=="Subtraction":
+        sample_result[:] = [a - b for a, b in zip(sample_signal1, sample_signal2)]
     return
 
-def list_size():
-    print(len(sample_signal1))
+# def list_size():
+#     print(len())
 
 
 def add_sub(op):
@@ -41,12 +62,13 @@ def add_sub(op):
     root.title(op)
     root.geometry('250x150')
 
-    btn = Button(root, text='Open Signal 1', command=lambda: set_lists())
+    btn = Button(root, text='Open Signal 1', command=lambda:set_signal1())
     btn.pack(side=TOP, padx=10, pady=10)
 
-
-    btn2 = Button(root, text='Open Signal 2', command=lambda: set_lists())
+    btn2 = Button(root, text='Open Signal 2', command=lambda: set_signal2(op))
     btn2.pack(side=TOP, padx=20, pady=20)
+    # print("Add Sub fun: ",len(sample_signal1))
+    # print("Add Sub fun: ",len(sample_signal2))
 
     return
 def mul_shift(op):

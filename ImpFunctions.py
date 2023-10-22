@@ -40,4 +40,4 @@ def open_file():
 
     print("ImpFunctions: ",len(sample))
 
-    return index, sample
+    return index,sample
