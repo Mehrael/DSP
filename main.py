@@ -11,6 +11,7 @@ Button(root, text='Discrete & Continuous Signals',command=lambda :part1()).pack(
 Button(root,text='Discrete Signal',command=lambda :part2()).pack(side=TOP, padx=10, pady=10)
 
 options = [
+    "Select an Operation",
     "Addition",
     "Subtraction",
     "Multiplication",
