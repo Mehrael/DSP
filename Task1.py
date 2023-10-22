@@ -12,9 +12,11 @@ isPeriodic = None
 N = 0
 index = []
 sampleAmp = []
+SinFile = 'SinOutput.txt'
+CosFile = 'CosOutput.txt'
 
 def part1():
-    root = Tk()
+    root = Toplevel()
     root.title('Drawing Signals')
     root.geometry('250x150')
 
@@ -70,54 +72,52 @@ def part1():
         plt.show()
         return
 
-    mainloop()
+    # mainloop()
 
 def part2():
-    SinFile = 'SinOutput.txt'
-    CosFile = 'CosOutput.txt'
 
-    root = Tk()
-    root.title('Input Signal')
-    root.geometry('300x450')
+    window = Toplevel()
+    window.title('Input Signal')
+    window.geometry('300x450')
     function = IntVar()
 
-    err = tkinter.Label(root, text="")
+    err = tkinter.Label(window, text="")
     err.pack(padx=5, pady=5)
 
-    label = tkinter.Label(root, text="Function ")
+    label = tkinter.Label(window, text="Function ")
     label.pack()
 
-    Radiobutton(root, text="Cos()", variable=function, value=0, command=lambda: function.get()).pack(padx=5, pady=5)
-    Radiobutton(root, text="Sin()", variable=function, value=1, command=lambda: function.get()).pack(padx=5, pady=5)
+    Radiobutton(window, text="Cos()", variable=function, value=1, command=lambda: function.get()).pack(padx=5, pady=5)
+    Radiobutton(window, text="Sin()", variable=function, value=2, command=lambda: function.get()).pack(padx=5, pady=5)
 
-    label = tkinter.Label(root, text="Amplitude")
+    label = tkinter.Label(window, text="Amplitude")
     label.pack(padx=5, pady=5)
 
-    amplitude = tkinter.Entry(root)
+    amplitude = tkinter.Entry(window)
     amplitude.pack(padx=5, pady=5)
 
-    label = tkinter.Label(root, text="Analog Frequency")
+    label = tkinter.Label(window, text="Analog Frequency")
     label.pack(padx=5, pady=5)
 
-    analog_freq = tkinter.Entry(root)
+    analog_freq = tkinter.Entry(window)
     analog_freq.pack(padx=5, pady=5)
 
-    label = tkinter.Label(root, text="Sampling Frequency")
+    label = tkinter.Label(window, text="Sampling Frequency")
     label.pack(padx=5, pady=5)
 
-    sampling_freq = tkinter.Entry(root)
+    sampling_freq = tkinter.Entry(window)
     sampling_freq.pack(padx=5, pady=5)
 
-    label = tkinter.Label(root, text="Phase Shift")
+    label = tkinter.Label(window, text="Phase Shift")
     label.pack(padx=5, pady=5)
 
-    phase_shift = tkinter.Entry(root)
+    phase_shift = tkinter.Entry(window)
     phase_shift.pack(padx=5, pady=5)
 
-    btn = Button(root, text='Draw', command=lambda: get_values())
+    btn = Button(window, text='Draw', command=lambda: draw_signals())
     btn.pack(padx=5, pady=5)
 
-    def get_values():
+    def draw_signals():
         if validation():
             fun = function.get()
             A = int(amplitude.get())
@@ -130,13 +130,14 @@ def part2():
             t = np.arange(0, 1, Ts)
 
             if fun == 1:
-                y = A * np.sin(2 * np.pi * F * t + theta)
-                fun_name = "Sin"
-                file_name = SinFile
-            else:
                 y = A * np.cos(2 * np.pi * F * t + theta)
                 fun_name = "Cos"
                 file_name = CosFile
+            elif fun == 2:
+                y = A * np.sin(2 * np.pi * F * t + theta)
+                fun_name = "Sin"
+                file_name = SinFile
+
             # Plot the signal
             fig, axs = plt.subplots(1, 2)
             axs[0].set_title('Discrete Signal')
@@ -161,6 +162,13 @@ def part2():
 
     def validation():
         text_err = ""
+        try:
+            x = function.get()
+            if x == 0:
+                raise ValueError
+        except ValueError:
+            text_err += "You must choose a function\n"
+
         try:
             x = int(amplitude.get())
             if x == 0 or x == NONE:
@@ -193,4 +201,4 @@ def part2():
         else:
             return False
 
-    root.mainloop()
+    # window.mainloop()
