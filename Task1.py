@@ -4,7 +4,6 @@ from tkinter.ttk import *
 from tkinter.filedialog import askopenfile
 import numpy as np
 import matplotlib.pyplot as plt
-
 from comparesignals import SignalSamplesAreEqual
 
 signalType = None
