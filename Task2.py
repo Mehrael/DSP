@@ -40,7 +40,7 @@ def set_signal1():
     index_signal1[:],sample_signal1[:]=open_file()
     # print("Set Signal1: ",len(sample_signal1))
     return
-def set_signal2(op):
+def set_signal2():
     index_signal2[:],sample_signal2[:]=open_file()
     # print("Set Signal2: ",len(sample_signal2))
 
@@ -70,16 +70,36 @@ def calculate(op,entrybox):
         if op=="Subtraction":
             sample_result[:] = [a - b for a, b in zip(sample_signal1, sample_signal2)]
             index_result[:]=index_signal2
+
     elif op=="Multiplication":
         const=int(entrybox.get())
         sample_result[:]=[sample*const for sample in sample_signal1]
         index_result[:]=index_signal1
+
     elif op=="Shifting":
         const=int(entrybox.get())
         index_result[:]=[index + const for index in index_signal1 ]
         sample_result[:]=sample_signal1
+
+    elif op=="Normalization":
+        minimum = min(sample_signal1)
+        maximum = max(sample_signal1)
+        choice = int(entrybox.get())
+        if choice == 1:
+            sample_result[:] = [(2 * (x - minimum) / (maximum - minimum)) - 1 for x in sample_signal1]
+        elif choice == 2:
+            sample_result[:] = [(x - minimum) / (maximum - minimum) for x in sample_signal1]
+        index_result[:] = index_signal1
+        print("-----------------------------")
+        print("Choice: ",choice)
+        print("Sample length: ",len(sample_result))
+        print("Index length: ",len(index_result))
+
     draw_signal(index_signal1,sample_signal1, "Signal 1")
-    draw_signal(index_signal2,sample_signal2, "Signal 2")
+
+    if op == "Addition" or op=="Subtraction" :
+        draw_signal(index_signal2,sample_signal2, "Signal 2")
+
     draw_signal(index_result, sample_result, "Resultant Signal")
     return
 
@@ -91,16 +111,16 @@ def add_sub(op):
     btn = Button(root, text='Open Signal 1', command=lambda:set_signal1())
     btn.pack(side=TOP, padx=10, pady=10)
 
-    btn2 = Button(root, text='Open Signal 2', command=lambda: set_signal2(op))
+    btn2 = Button(root, text='Open Signal 2', command=lambda: set_signal2())
     btn2.pack(side=TOP, padx=20, pady=20)
 
-    btn3=Button(root,text='Calculate',command=lambda: calculate(op)).pack()
+    Button(root,text='Calculate',command=lambda: calculate(op)).pack()
     # print("Add Sub fun: ",len(sample_signal1))
     # print("Add Sub fun: ",len(sample_signal2))
 
     return
 def mul_shift(op):
-    root = Tk()
+    root = Toplevel()
     root.title(op)
     root.geometry('300x150')
 
@@ -116,7 +136,7 @@ def mul_shift(op):
     Button(root, text='Calculate',command=lambda:calculate(op,input)).pack(padx=5, pady=5)
 
 def sqr_acc(op):
-    root = Tk()
+    root = Toplevel()
     root.title(op)
     root.geometry('300x100')
 
@@ -125,12 +145,12 @@ def sqr_acc(op):
     Button(root, text='Draw',).pack(padx=5, pady=5)
 
 def norm(op):
-    root = Tk()
+    root = Toplevel()
     root.title(op)
     root.geometry('300x200')
     choice = IntVar()
 
-    Button(root, text='Open Signal').pack(side=TOP, padx=10, pady=10)
+    Button(root, text='Open Signal',command=lambda: set_signal1()).pack(side=TOP, padx=10, pady=10)
 
     label = tkinter.Label(root, text="Choose range: ")
     label.pack()
@@ -138,5 +158,5 @@ def norm(op):
     Radiobutton(root, text="-1 to 1", variable=choice, value=1, command=lambda: choice.get()).pack(padx=5, pady=5)
     Radiobutton(root, text="0 to 1", variable=choice, value=2, command=lambda: choice.get()).pack(padx=5, pady=5)
 
-    Button(root, text='Draw',).pack(padx=5, pady=5)
+    Button(root, text='Calculate',command=lambda: calculate(op,choice)).pack(padx=5, pady=5)
 
