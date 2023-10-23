@@ -46,8 +46,7 @@ def set_signal2():
 
     return
 
-# def list_size():
-#     print(len())
+
 def calculate(op,entrybox):
     if op=="Addition" or op=="Subtraction":
         if len(sample_signal1)!=len(sample_signal2) and op=="Addition":
@@ -70,16 +69,24 @@ def calculate(op,entrybox):
         if op=="Subtraction":
             sample_result[:] = [a - b for a, b in zip(sample_signal1, sample_signal2)]
             index_result[:]=index_signal2
+        # SignalSamplesAreEqual("Signals/Task2/output signals/Signal1+signal2.txt",len(sample_result),sample_result)
+        # SignalSamplesAreEqual("Signals/Task2/output signals/signal1+signal3.txt",len(sample_result),sample_result)
+        # SignalSamplesAreEqual("Signals/Task2/output signals/signal1-signal2.txt",len(sample_result),sample_result)
+        # SignalSamplesAreEqual("Signals/Task2/output signals/signal1-signal3.txt",len(sample_result),sample_result)
 
     elif op=="Multiplication":
         const=int(entrybox.get())
         sample_result[:]=[sample*const for sample in sample_signal1]
         index_result[:]=index_signal1
+        # SignalSamplesAreEqual("Signals/Task2/output signals/MultiplySignalByConstant-Signal1 - by 5.txt",len(sample_result),sample_result)
+        # SignalSamplesAreEqual("Signals/Task2/output signals/MultiplySignalByConstant-signal2 - by 10.txt",len(sample_result),sample_result)
 
     elif op=="Shifting":
         const=int(entrybox.get())
         index_result[:]=[index + const for index in index_signal1 ]
         sample_result[:]=sample_signal1
+        # SignalSamplesAreEqual("Signals/Task2/output signals/output shifting by add 500.txt",len(sample_result),sample_result)
+        # SignalSamplesAreEqual("Signals/Task2/output signals/output shifting by minus 500.txt",len(sample_result),sample_result)
 
     elif op=="Normalization":
         minimum = min(sample_signal1)
@@ -90,21 +97,19 @@ def calculate(op,entrybox):
         elif choice == 2:
             sample_result[:] = ((np.array(sample_signal1) - minimum) / (maximum - minimum)).tolist()
         index_result[:] = index_signal1
-        # print("-----------------------------")
-        # print("Choice: ",choice)
-        # print("Sample length: ",len(sample_result))
-        # print("Index length: ",len(index_result))
+        # SignalSamplesAreEqual("Signals/Task2/output signals/normalize of signal 1 -- output.txt",len(sample_result),sample_result)
+        # SignalSamplesAreEqual("Signals/Task2/output signals/normlize signal 2 -- output.txt",len(sample_result),sample_result)
+
 
     elif op=="Squaring":
         sample_result[:] = np.square(sample_signal1)
         index_result[:] = index_signal1
-        # print("------------------------")
-        # print(sample_result)
+        # SignalSamplesAreEqual("Signals/Task2/output signals/Output squaring signal 1.txt",len(sample_result),sample_result)
+
     elif op == "Accumulation":
         sample_result[:] = np.cumsum(sample_signal1)
         index_result[:] = index_signal1
-        # print("------------------------")
-        # print(sample_result)
+        # SignalSamplesAreEqual("Signals/Task2/output signals/output accumulation for signal1.txt",len(sample_result),sample_result)
 
     draw_signal(index_signal1,sample_signal1, "Signal 1")
 
