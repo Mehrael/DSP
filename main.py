@@ -28,4 +28,4 @@ Button(root,text='Signals with Arithmatic Operations',command=lambda: set_op(art
 mainloop()
 print(len(sample_signal1))
 print(len(sample_signal2))
-print(sample_result)
+print(index_result)

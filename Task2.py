@@ -17,6 +17,8 @@ sample_signal2=[]
 
 index_result=[]
 sample_result=[]
+
+# const=None
 op = ""
 def set_op(x):
     op = x
@@ -46,7 +48,7 @@ def set_signal2(op):
 
 # def list_size():
 #     print(len())
-def calculate(op):
+def calculate(op,entrybox):
     if op=="Addition" or op=="Subtraction":
         if len(sample_signal1)!=len(sample_signal2) and op=="Addition":
             pairs = zip_longest(sample_signal1, sample_signal2, fillvalue=0)
@@ -68,6 +70,14 @@ def calculate(op):
         if op=="Subtraction":
             sample_result[:] = [a - b for a, b in zip(sample_signal1, sample_signal2)]
             index_result[:]=index_signal2
+    elif op=="Multiplication":
+        const=int(entrybox.get())
+        sample_result[:]=[sample*const for sample in sample_signal1]
+        index_result[:]=index_signal1
+    elif op=="Shifting":
+        const=int(entrybox.get())
+        index_result[:]=[index + const for index in index_signal1 ]
+        sample_result[:]=sample_signal1
     draw_signal(index_signal1,sample_signal1, "Signal 1")
     draw_signal(index_signal2,sample_signal2, "Signal 2")
     draw_signal(index_result, sample_result, "Resultant Signal")
@@ -92,7 +102,10 @@ def add_sub(op):
 def mul_shift(op):
     root = Tk()
     root.title(op)
-    root.geometry('300x100')
+    root.geometry('300x150')
+
+    btn = Button(root, text='Open Signal File', command=lambda:set_signal1())
+    btn.pack(side=TOP, padx=10, pady=10)
 
     label = tkinter.Label(root, text="Constant Value")
     label.pack(padx=5, pady=5)
@@ -100,7 +113,7 @@ def mul_shift(op):
     input = tkinter.Entry(root)
     input.pack(padx=5, pady=5)
 
-    Button(root, text='Draw',).pack(padx=5, pady=5)
+    Button(root, text='Calculate',command=lambda:calculate(op,input)).pack(padx=5, pady=5)
 
 def sqr_acc(op):
     root = Tk()
