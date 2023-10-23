@@ -26,6 +26,8 @@ def SignalSamplesAreEqual(file_name, indices, samples):
         if abs(samples[i] - expected_samples[i]) < 0.01:
             continue
         else:
+            print("Sample value: ",samples[i])
+            print("Expected value: ", expected_samples[i])
             print("Test case failed, your signal have different values from the expected one")
             return
     print("Test case passed successfully")

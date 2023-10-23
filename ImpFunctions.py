@@ -3,6 +3,8 @@ import matplotlib.pyplot as plt
 
 
 def draw_signal(index, sample, text):
+    print("length of the index: ",len(index))
+    print("length of the sample: ",len(sample))
     fig, axs = plt.subplots(1, 2)
     fig.suptitle(text, fontsize=30)
     axs[0].set_title('Discrete Signal')
