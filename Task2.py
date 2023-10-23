@@ -86,9 +86,9 @@ def calculate(op,entrybox):
         maximum = max(sample_signal1)
         choice = int(entrybox.get())
         if choice == 1:
-            sample_result[:] = [(2 * (x - minimum) / (maximum - minimum)) - 1 for x in sample_signal1]
+            sample_result[:] = (2*((np.array(sample_signal1) - minimum) / (maximum - minimum)) - 1).tolist()
         elif choice == 2:
-            sample_result[:] = [(x - minimum) / (maximum - minimum) for x in sample_signal1]
+            sample_result[:] = ((np.array(sample_signal1) - minimum) / (maximum - minimum)).tolist()
         index_result[:] = index_signal1
         # print("-----------------------------")
         # print("Choice: ",choice)
