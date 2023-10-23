@@ -41,21 +41,37 @@ def set_signal1():
 def set_signal2(op):
     index_signal2[:],sample_signal2[:]=open_file()
     # print("Set Signal2: ",len(sample_signal2))
-    if len(sample_signal1)!=len(sample_signal2) and op=="Addition":
-        pairs = zip_longest(sample_signal1, sample_signal2, fillvalue=0)
-        sample_result[:] = [a + b for a, b in pairs]
-    if op=="Addition":
-        sample_result[:] = [a + b for a, b in zip(sample_signal1, sample_signal2)]
-    if len(sample_signal1)!=len(sample_signal2) and op=="Subtraction":
-        pairs = zip_longest(sample_signal1, sample_signal2, fillvalue=0)
-        sample_result[:] = [a - b for a, b in pairs]
-    if op=="Subtraction":
-        sample_result[:] = [a - b for a, b in zip(sample_signal1, sample_signal2)]
+
     return
 
 # def list_size():
 #     print(len())
-
+def calculate(op):
+    if op=="Addition" or op=="Subtraction":
+        if len(sample_signal1)!=len(sample_signal2) and op=="Addition":
+            pairs = zip_longest(sample_signal1, sample_signal2, fillvalue=0)
+            sample_result[:] = [a + b for a, b in pairs]
+            if len(sample_signal1)>=len(sample_signal2):
+                index_result[:]=index_signal1
+            else:
+                index_result[:]=index_signal2
+        if op=="Addition":
+            sample_result[:] = [a + b for a, b in zip(sample_signal1, sample_signal2)]
+            index_result[:]=index_signal2
+        if len(sample_signal1)!=len(sample_signal2) and op=="Subtraction":
+            pairs = zip_longest(sample_signal1, sample_signal2, fillvalue=0)
+            sample_result[:] = [a - b for a, b in pairs]
+            if len(sample_signal1)>=len(sample_signal2):
+                index_result[:]=index_signal1
+            else:
+                index_result[:]=index_signal2
+        if op=="Subtraction":
+            sample_result[:] = [a - b for a, b in zip(sample_signal1, sample_signal2)]
+            index_result[:]=index_signal2
+    draw_signal(index_signal1,sample_signal1, "Signal 1")
+    draw_signal(index_signal2,sample_signal2, "Signal 2")
+    draw_signal(index_result, sample_result, "Resultant Signal")
+    return
 
 def add_sub(op):
     root = Toplevel()
@@ -67,6 +83,8 @@ def add_sub(op):
 
     btn2 = Button(root, text='Open Signal 2', command=lambda: set_signal2(op))
     btn2.pack(side=TOP, padx=20, pady=20)
+
+    btn3=Button(root,text='Calculate',command=lambda: calculate(op)).pack()
     # print("Add Sub fun: ",len(sample_signal1))
     # print("Add Sub fun: ",len(sample_signal2))
 
