@@ -14,6 +14,7 @@ sampleAmp = []
 SinFile = 'SinOutput.txt'
 CosFile = 'CosOutput.txt'
 
+
 def part1():
     root = Toplevel()
     root.title('Drawing Signals')
@@ -71,10 +72,8 @@ def part1():
         plt.show()
         return
 
-    # mainloop()
 
 def part2():
-
     window = Toplevel()
     window.title('Input Signal')
     window.geometry('300x450')
@@ -199,5 +198,3 @@ def part2():
             return True
         else:
             return False
-
-    # window.mainloop()

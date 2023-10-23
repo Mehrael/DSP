@@ -1,13 +1,8 @@
-import tkinter
-from tkinter import *
-from tkinter.ttk import *
 from tkinter.filedialog import askopenfile
-import numpy as np
 import matplotlib.pyplot as plt
 
 
-
-def draw_signal(index, sample,text):
+def draw_signal(index, sample, text):
     fig, axs = plt.subplots(1, 2)
     fig.suptitle(text, fontsize=30)
     axs[0].set_title('Discrete Signal')
@@ -28,13 +23,13 @@ def draw_signal(index, sample,text):
     plt.show()
     return
 
-def open_file():
 
+def open_file():
     signalType = None
     isPeriodic = None
     N = 0
     index = []
-    sample= []
+    sample = []
     file = askopenfile(mode='r', filetypes=[('Text files', '*.txt')])
     if file is not None:
         content = file.readlines()
@@ -58,8 +53,6 @@ def open_file():
             index.append(int(x[0]))
             sample.append(float(x[1]))
 
-    print("ImpFunctions: ",len(sample))
+    # print("ImpFunctions: ", len(sample))
 
-    return index,sample
-
-
+    return index, sample
