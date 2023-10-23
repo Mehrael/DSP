@@ -90,10 +90,21 @@ def calculate(op,entrybox):
         elif choice == 2:
             sample_result[:] = [(x - minimum) / (maximum - minimum) for x in sample_signal1]
         index_result[:] = index_signal1
-        print("-----------------------------")
-        print("Choice: ",choice)
-        print("Sample length: ",len(sample_result))
-        print("Index length: ",len(index_result))
+        # print("-----------------------------")
+        # print("Choice: ",choice)
+        # print("Sample length: ",len(sample_result))
+        # print("Index length: ",len(index_result))
+
+    elif op=="Squaring":
+        sample_result[:] = np.square(sample_signal1)
+        index_result[:] = index_signal1
+        # print("------------------------")
+        # print(sample_result)
+    elif op == "Accumulation":
+        sample_result[:] = np.cumsum(sample_signal1)
+        index_result[:] = index_signal1
+        # print("------------------------")
+        # print(sample_result)
 
     draw_signal(index_signal1,sample_signal1, "Signal 1")
 
@@ -140,9 +151,9 @@ def sqr_acc(op):
     root.title(op)
     root.geometry('300x100')
 
-    Button(root, text='Open Signal').pack(side=TOP, padx=10, pady=10)
+    Button(root, text='Open Signal',command=lambda: set_signal1()).pack(side=TOP, padx=10, pady=10)
 
-    Button(root, text='Draw',).pack(padx=5, pady=5)
+    Button(root, text='Calculate',command=lambda: calculate(op,0)).pack(padx=5, pady=5)
 
 def norm(op):
     root = Toplevel()
