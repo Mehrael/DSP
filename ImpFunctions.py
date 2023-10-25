@@ -3,15 +3,13 @@ import matplotlib.pyplot as plt
 
 
 def draw_signal(index, sample, text):
-    print("length of the index: ",len(index))
-    print("length of the sample: ",len(sample))
+
     fig, axs = plt.subplots(1, 2)
     fig.suptitle(text, fontsize=30)
     axs[0].set_title('Discrete Signal')
     for (i, j) in zip(index, sample):
         axs[0].plot([i, i], [0, j], color='red')
-    print("********************length of the index: ",len(index))
-    print("********************length of the sample: ",len(sample))
+
     axs[0].scatter(index, sample)
     axs[0].axhline(0, color='black', linewidth=0.5)
     axs[0].axvline(0, color='black', linewidth=0.5)

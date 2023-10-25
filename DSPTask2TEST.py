@@ -58,16 +58,13 @@ def AddSignalSamplesAreEqual(userFirstSignal,userSecondSignal,Your_indices,Your_
 def SubSignalSamplesAreEqual(userFirstSignal,userSecondSignal,Your_indices,Your_samples):
     if(userFirstSignal=='Signal1.txt' and userSecondSignal=='Signal2.txt'):
         file_name="Signals/Task2/output signals/signal1-signal2.txt" # write here path of signal1-signal2
-    elif(userFirstSignal=='Signal1.txt' and userSecondSignal=='signal3.txt'):
+    elif(userFirstSignal=='Signal1.txt' and userSecondSignal=='signal3.txt'):# <-- Msh bid5ol al condition!!!!
         file_name="Signals/Task2/output signals/signal1-signal3.txt" # write here path of signal1-signal3
+        # print("IIIINNNNNN")
         
     expected_indices,expected_samples=ReadSignalFile(file_name)   
     
     if (len(expected_samples)!=len(Your_samples)) and (len(expected_indices)!=len(Your_indices)):
-        print("Expected Samples: ",len(expected_samples))
-        print("Expected Indices: ",len(expected_indices))
-        print("Samples: ",len(Your_samples))
-        print("Indices: ",len(Your_indices))
         print("Subtraction Test case failed, your signal have different length from the expected one")
         return
     for i in range(len(Your_indices)):
@@ -78,7 +75,8 @@ def SubSignalSamplesAreEqual(userFirstSignal,userSecondSignal,Your_indices,Your_
         if abs(Your_samples[i] - expected_samples[i]) < 0.01:
             continue
         else:
-            print("Subtraction Test case failed, your signal have different values from the expected one") 
+            print("Subtraction Test case failed, your signal have different values from the expected one")
+            # print("***************",abs(Your_samples[i] - expected_samples[i]),"     i: ",i)
             return
     print("Subtraction Test case passed successfully")
 
