@@ -10,6 +10,8 @@ def draw_signal(index, sample, text):
     axs[0].set_title('Discrete Signal')
     for (i, j) in zip(index, sample):
         axs[0].plot([i, i], [0, j], color='red')
+    print("********************length of the index: ",len(index))
+    print("********************length of the sample: ",len(sample))
     axs[0].scatter(index, sample)
     axs[0].axhline(0, color='black', linewidth=0.5)
     axs[0].axvline(0, color='black', linewidth=0.5)
@@ -55,6 +57,6 @@ def open_file():
             index.append(int(x[0]))
             sample.append(float(x[1]))
 
-    # print("ImpFunctions: ", len(sample))
+    print("ImpFunctions: ", len(sample))
 
     return index, sample

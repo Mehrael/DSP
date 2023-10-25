@@ -5,8 +5,8 @@ from tkinter import *
 from tkinter.ttk import *
 from itertools import zip_longest
 import numpy as np
-from comparesignals import SignalSamplesAreEqual
-
+# from comparesignals import SignalSamplesAreEqual
+from DSPTask2TEST import *
 index_signal1 = []
 sample_signal1 = []
 
@@ -83,6 +83,8 @@ def calc():
         local_sample_result = [a + b for a, b in zip(local_sample_result, sample)]
 
     sample_result[:]=local_sample_result
+    # AddSignalSamplesAreEqual('Signal1.txt', 'Signal2.txt', index_result, sample_result)
+    AddSignalSamplesAreEqual('Signal1.txt', 'signal3.txt', index_result, sample_result)
 
     draw_signal(index_result, sample_result, "Resultant Signal")
     # for i in range(len(sample_signal)-1):
@@ -126,6 +128,7 @@ def calculate(op, entrybox):
         if op == "Addition":
             sample_result[:] = [a + b for a, b in zip(sample_signal[0], sample_signal[1])]
             index_result[:] = index_signal[1]
+
         if len(sample_signal1) != len(sample_signal2) and op == "Subtraction":
             pairs = zip_longest(sample_signal1, sample_signal2, fillvalue=0)
             sample_result[:] = [a - b for a, b in pairs]
@@ -134,9 +137,11 @@ def calculate(op, entrybox):
             else:
                 index_result[:] = index_signal2
         if op == "Subtraction":
-            sample_result[:] = [a - b for a, b in zip(sample_signal2, sample_signal1)]
-            index_result[:] = index_signal2
-        SignalSamplesAreEqual("Signals/Task2/output signals/Signal1+signal2.txt", len(sample_result), sample_result)
+            sample_result[:] = [a - b for a, b in zip(sample_signal[1], sample_signal[0])]
+            index_result[:] = index_signal[1]
+            SubSignalSamplesAreEqual("Signal1.txt", "Signal2.txt", index_result, sample_result)
+            # SubSignalSamplesAreEqual("Signal1.txt", "signal3.txt", index_result, sample_result)
+        # SignalSamplesAreEqual("Signals/Task2/output signals/Signal1+signal2.txt", len(sample_result), sample_result)
         # SignalSamplesAreEqual("Signals/Task2/output signals/signal1+signal3.txt",len(sample_result),sample_result)
         # SignalSamplesAreEqual("Signals/Task2/output signals/signal1-signal2.txt",len(sample_result),sample_result)
         # SignalSamplesAreEqual("Signals/Task2/output signals/signal1-signal3.txt",len(sample_result),sample_result)
@@ -147,24 +152,30 @@ def calculate(op, entrybox):
         index_result[:] = index_signal1
         # SignalSamplesAreEqual("Signals/Task2/output signals/MultiplySignalByConstant-Signal1 - by 5.txt",len(sample_result),sample_result)
         # SignalSamplesAreEqual("Signals/Task2/output signals/MultiplySignalByConstant-signal2 - by 10.txt",len(sample_result),sample_result)
-
+        MultiplySignalByConst(const, index_result, sample_result)
     elif op == "Shifting":
         const = int(entrybox.get())
         index_result[:] = [index + const for index in index_signal1]
         sample_result[:] = sample_signal1
         # SignalSamplesAreEqual("Signals/Task2/output signals/output shifting by add 500.txt",len(sample_result),sample_result)
-        SignalSamplesAreEqual("Signals/Task2/output signals/output shifting by minus 500.txt", len(sample_result),
-                              sample_result)
-
+        # SignalSamplesAreEqual("Signals/Task2/output signals/output shifting by minus 500.txt", len(sample_result),
+        #                       sample_result)
+        # print(index_result)
+        ShiftSignalByConst(const, index_result, sample_result)
     elif op == "Normalization":
         minimum = min(sample_signal1)
         maximum = max(sample_signal1)
         choice = int(entrybox.get())
+
+        index_result[:] = index_signal1
+
         if choice == 1:
             sample_result[:] = (2 * ((np.array(sample_signal1) - minimum) / (maximum - minimum)) - 1).tolist()
+            NormalizeSignal(-1, 1, index_result, sample_result)
         elif choice == 2:
             sample_result[:] = ((np.array(sample_signal1) - minimum) / (maximum - minimum)).tolist()
-        index_result[:] = index_signal1
+            NormalizeSignal(0, 1, index_result, sample_result)
+
         # SignalSamplesAreEqual("Signals/Task2/output signals/normalize of signal 1 -- output.txt",len(sample_result),sample_result)
         # SignalSamplesAreEqual("Signals/Task2/output signals/normlize signal 2 -- output.txt",len(sample_result),sample_result)
 
@@ -173,16 +184,20 @@ def calculate(op, entrybox):
         sample_result[:] = np.square(sample_signal1)
         index_result[:] = index_signal1
         # SignalSamplesAreEqual("Signals/Task2/output signals/Output squaring signal 1.txt",len(sample_result),sample_result)
-
+        SignalSamplesAreEqual("Squaring","Signals/Task2/output signals/Output squaring signal 1.txt",index_result,sample_result)
     elif op == "Accumulation":
         sample_result[:] = np.cumsum(sample_signal1)
         index_result[:] = index_signal1
         # SignalSamplesAreEqual("Signals/Task2/output signals/output accumulation for signal1.txt",len(sample_result),sample_result)
+        SignalSamplesAreEqual("Accumulation","Signals/Task2/output signals/output accumulation for signal1.txt",index_result,sample_result)
 
-    draw_signal(index_signal[0], sample_signal[0], "Signal 1")
+
 
     if op == "Addition" or op == "Subtraction":
+        draw_signal(index_signal[0], sample_signal[0], "Signal 1")
         draw_signal(index_signal[1], sample_signal[1], "Signal 2")
+    else:
+        draw_signal(index_signal1, sample_signal1, "Signal 1")
 
     draw_signal(index_result, sample_result, "Resultant Signal")
     return
