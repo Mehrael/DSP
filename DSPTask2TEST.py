@@ -58,7 +58,7 @@ def AddSignalSamplesAreEqual(userFirstSignal,userSecondSignal,Your_indices,Your_
 def SubSignalSamplesAreEqual(userFirstSignal,userSecondSignal,Your_indices,Your_samples):
     if(userFirstSignal=='Signal1.txt' and userSecondSignal=='Signal2.txt'):
         file_name="Signals/Task2/output signals/signal1-signal2.txt" # write here path of signal1-signal2
-    elif(userFirstSignal=='Signal1.txt' and userSecondSignal=='signal3.txt'):# <-- Msh bid5ol al condition!!!!
+    elif(userFirstSignal=='Signal1.txt' and userSecondSignal=='signal3.txt'):
         file_name="Signals/Task2/output signals/signal1-signal3.txt" # write here path of signal1-signal3
         # print("IIIINNNNNN")
         
@@ -140,9 +140,9 @@ def MultiplySignalByConst(User_Const,Your_indices,Your_samples):
 def ShiftSignalByConst(Shift_value,Your_indices,Your_samples):
     # NOTE MOHMA: al files m3kosa 3shan esmha m3kos
     if(Shift_value==500):
-        file_name="Signals/Task2/output signals/output shifting by minus 500.txt" # write here path of output shifting by add 500.txt
+        file_name="Signals/Task2/output signals/output shifting by add 500.txt" # write here path of output shifting by add 500.txt
     elif(Shift_value==-500):
-        file_name="Signals/Task2/output signals/output shifting by add 500.txt" # write here path of output shifting by minus 500.txt
+        file_name="Signals/Task2/output signals/output shifting by minus 500.txt" # write here path of output shifting by minus 500.txt
         
     expected_indices,expected_samples=ReadSignalFile(file_name)      
     if (len(expected_samples)!=len(Your_samples)) and (len(expected_indices)!=len(Your_indices)):

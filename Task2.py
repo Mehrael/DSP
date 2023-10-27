@@ -81,7 +81,7 @@ def calc():
         local_sample_result = [a + b for a, b in zip(local_sample_result, sample)]
 
     sample_result[:]=local_sample_result
-    # AddSignalSamplesAreEqual('Signal1.txt', 'Signal2.txt', index_result, sample_result)
+    AddSignalSamplesAreEqual('Signal1.txt', 'Signal2.txt', index_result, sample_result)
     AddSignalSamplesAreEqual('Signal1.txt', 'signal3.txt', index_result, sample_result)
 
     draw_signal(index_result, sample_result, "Resultant Signal")
@@ -133,7 +133,7 @@ def calculate(op, entrybox):
             index_result[:] = index_signal2
             # print(sample_result)
             SubSignalSamplesAreEqual("Signal1.txt", "Signal2.txt", index_result, sample_result)
-            # SubSignalSamplesAreEqual("Signal1.txt", "signal3.txt", index_result, sample_result)
+            SubSignalSamplesAreEqual("Signal1.txt", "signal3.txt", index_result, sample_result)
 
     elif op == "Multiplication":
         const = int(entrybox.get())
@@ -141,9 +141,9 @@ def calculate(op, entrybox):
         index_result[:] = index_signal1
         MultiplySignalByConst(const, index_result, sample_result)
 
-    elif op == "Shifting":
+    elif op == "Shifting": #Shift to the LEFT
         const = int(entrybox.get())
-        index_result[:] = [index + const for index in index_signal1]
+        index_result[:] = [index - const for index in index_signal1]
         sample_result[:] = sample_signal1
         ShiftSignalByConst(const, index_result, sample_result)
 

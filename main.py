@@ -28,4 +28,4 @@ Button(root, text='Signals with Arithmatic Operations', command=lambda: set_op(a
 mainloop()
 # print(len(sample_signal[0]))
 # print(len(sample_signal[1]))
-# print(sample_result)
+print(sample_result)
