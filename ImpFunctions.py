@@ -26,13 +26,16 @@ def draw_signal(index, sample, text):
     return
 
 
-def open_file():
+def open_file(path: object = None) -> object:
     signalType = None
     isPeriodic = None
     N = 0
     index = []
     sample = []
-    file = askopenfile(mode='r', filetypes=[('Text files', '*.txt')])
+    if path is not None:
+        file=open(path, 'r')
+    else:
+        file = askopenfile(mode='r', filetypes=[('Text files', '*.txt')])
     if file is not None:
         content = file.readlines()
         for i, x in enumerate(content):
