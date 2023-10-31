@@ -3,10 +3,6 @@ import tkinter
 from tkinter import *
 from tkinter.ttk import *
 import tkinter.messagebox as msgbx
-from tkinter.filedialog import askopenfile
-import numpy as np
-import matplotlib.pyplot as plt
-from numpy.core.defchararray import zfill
 from Signals.Task3.Test1.QuanTest1 import *
 from Signals.Task3.Test2.QuanTest2 import *
 
@@ -81,11 +77,19 @@ def create_intervals():
 
 
 def quantize(op, num):
-    start = -1
     for x, value in enumerate(sample):
+        start = -1
         for i in range(len(interval_start)):
-            if value >= interval_start[i] and value < interval_end[i]:
+            if interval_start[i] < value <= interval_end[i]:
                 start = i
+                break
+
+        if start == -1:
+            for i in range(len(interval_start)):
+                if interval_start[i] <= value < interval_end[i]:
+                    start = i
+                    break
+
         quantized.append(interval_midpoint[start])
         error.append(round(quantized[x] - value, 3))
         interval_index.append(start + 1)
@@ -94,9 +98,19 @@ def quantize(op, num):
         else:
             encoded.append(bin(start)[2:].zfill(int(math.log2(float(num)))))
     if op == 1:
-        QuantizationTest1('Signals/Task3/Test1/Quan1_Out.txt',encoded,quantized)
+        QuantizationTest1('Signals/Task3/Test1/Quan1_Out.txt', encoded, quantized)
     else:
-        QuantizationTest2('Signals/Task3/Test2/Quan2_Out.txt',interval_index, encoded, quantized, error)
+        QuantizationTest2('Signals/Task3/Test2/Quan2_Out.txt', interval_index, encoded, quantized, error)
+
+    index.clear()
+    sample.clear()
+    interval_start.clear()
+    interval_end.clear()
+    interval_midpoint.clear()
+    interval_index.clear()
+    error.clear()
+    encoded.clear()
+    quantized.clear()
     return
 
 
