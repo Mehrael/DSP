@@ -118,10 +118,10 @@ def quan(op, num):
     if validation(op, num):
         global minimum_value
         minimum_value = min(sample)
-        print(minimum_value)
+        # print(minimum_value)
         global maximum_value
         maximum_value = max(sample)
-        print(maximum_value)
+        # print(maximum_value)
         delta(op, num, minimum_value, maximum_value)
     return
 
@@ -134,7 +134,7 @@ def delta(op, num, minval, maxval):
         levels = int(num)
     global diff
     diff = (maxval - minval) / levels
-    print(diff)
+    # print(diff)
     return
 
 

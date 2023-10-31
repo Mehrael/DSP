@@ -58,6 +58,6 @@ def open_file(path: object = None) -> object:
             index.append(int(x[0]))
             sample.append(float(x[1]))
 
-    print("ImpFunctions: ", len(sample))
+    # print("ImpFunctions: ", len(sample))
 
     return index, sample
