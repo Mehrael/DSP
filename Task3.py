@@ -7,6 +7,8 @@ from tkinter.filedialog import askopenfile
 import numpy as np
 import matplotlib.pyplot as plt
 from numpy.core.defchararray import zfill
+from Signals.Task3.Test1.QuanTest1 import *
+from Signals.Task3.Test2.QuanTest2 import *
 
 from ImpFunctions import *
 
@@ -48,7 +50,7 @@ def screen():
 
 def set_signals(op, num):
     if validation(op, num):
-        msgbx.showinfo(message="Great")
+        # msgbx.showinfo(message="Great")
         if op == 1:
             index[:], sample[:] = open_file('Signals/Task3/Test1/Quan1_input.txt')
         else:
@@ -82,7 +84,7 @@ def quantize(op, num):
     start = -1
     for x, value in enumerate(sample):
         for i in range(len(interval_start)):
-            if value >= interval_start[i] and value <= interval_end[i]:
+            if value >= interval_start[i] and value < interval_end[i]:
                 start = i
         quantized.append(interval_midpoint[start])
         error.append(round(quantized[x] - value, 3))
@@ -91,7 +93,10 @@ def quantize(op, num):
             encoded.append(bin(start)[2:].zfill(int(num)))
         else:
             encoded.append(bin(start)[2:].zfill(int(math.log2(float(num)))))
-
+    if op == 1:
+        QuantizationTest1('Signals/Task3/Test1/Quan1_Out.txt',encoded,quantized)
+    else:
+        QuantizationTest2('Signals/Task3/Test2/Quan2_Out.txt',interval_index, encoded, quantized, error)
     return
 
 
