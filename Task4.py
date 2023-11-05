@@ -10,10 +10,6 @@ import warnings
 # filter out all warnings
 warnings.filterwarnings("ignore")
 
-index = []
-sample = []
-
-
 def Task4_screen():
     root = Toplevel()
     root.title("Frequency Domain")
@@ -47,34 +43,52 @@ def set_signals(op, Fs):
             msgbx.showerror(title="Error", message=msg, )
             return
 
-        index[:], sample[:] = open_file('Signals/Task4/DFT/input_Signal_DFT.txt')
+        index, sample = open_file('Signals/Task4/DFT/input_Signal_DFT.txt')
         # print('index: ', index)
         # print('sample: ', sample)
-        DFT(sample, Fs)
+        I_DFT(sample, Fs,False)
         # print(dft)
-        index.clear()
-        sample.clear()
+
     elif op == 2: #IDFT
         amp, phase= special_open_file(',','Signals/Task4/IDFT/Input_Signal_IDFT_A,Phase.txt')
         # print('index: ', amp)
         # print('sample: ', phase)
-        IDFT(amp,phase)
+        I_DFT([], 0,True,amp,phase)
     return
 
 
-def DFT(x, Fs):
+def I_DFT(x, Fs, flag,amp=[],phase=[]):
     N = len(x)
-    X = np.zeros(N, dtype=np.complex128)
+    sample = np.zeros(N, dtype=np.complex128)
+    img = -2j
+
+    if flag: #IDFT
+        img *= -1
+        x = amp * (np.cos(phase) + 1j * np.sin(phase))
+        # print(e)
+        N = len(x)
+        sample = np.zeros(N)
+        index = np.zeros(N)
+
 
     for k in range(N):
         # print("-----------------------------")
         for n in range(N):
-            X[k] += x[n] * round(np.exp(-2j * np.pi * k * n / N), 13)
+            sample[k] += x[n] * round(np.exp(-2j * np.pi * k * n / N), 13)
         #     print("N: ",n," ,X[",k,"]: ",X[k])
         # print("X[",k,"]: ",X[k])
-    amp, phase = Amp_phase(X)
-    sketch(int(Fs), amp, "Amplitude Vs Frequency")
-    sketch(int(Fs), phase, "Phase Vs Frequency")
+        if flag:
+            index[k] = k
+            sample[k] /= N
+
+    if flag:
+        print('index: ', index)
+        print('sample: ', sample)
+
+    else: #DFT
+        amp, phase = Amp_phase(sample)
+        sketch(int(Fs), amp, "Amplitude Vs Frequency")
+        sketch(int(Fs), phase, "Phase Vs Frequency")
     # print("-------------------")
     # print(amp, phase)
     # return X
@@ -114,18 +128,3 @@ def sketch(F, yAxis, txt):
         xAxis[i] += funF * (1 + i)
 
     draw_signal(xAxis, yAxis, txt)
-
-def IDFT(amp,phase):
-    e = amp * (np.cos(phase) + 1j * np.sin(phase))
-    # print(e)
-    N = len(e)
-    sample = np.zeros(N)
-    index = np.zeros(N)
-    for n in range(N):
-        for k in range(N):
-            sample[n] += e[k] * round(np.exp(2j * np.pi * k * n / N), 13)
-        sample[n] /= N
-        index[n] = n
-
-    print('index: ', index)
-    print('sample: ', sample)
