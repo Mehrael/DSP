@@ -22,3 +22,16 @@ the user for the needed levels or number of bits available (in case of number of
 bits the application should compute from it the appropriate number of levels).
 Thereafter, the application should display the quantized signal and quantization
 error besides the encoded signal. 
+----
+framework includes a menu named Frequency Domain that includes the following features:   
+- The ability to apply Fourier transform to any input signal then display frequency versus amplitude and frequency versus phase relations after asking the user to enter the sampling frequency in HZ.  
+- Allow modification of the amplitude and phase of the signal components. 
+- Allow signal reconstruction using IDFT. 
+- The frequency components should be saved in txt file in polar form (amplitude and phase). 
+- The ability to read a txt file that contains frequency components in polar form and reconstructing the signal by IDFT.
+----
+Frequency domain menu includes the following features:   
+- Computing DCT for a given input, display the result and the user can choose the first m coefficients to be saved in txt file. 
+  ![image](https://github.com/Mehrael/DSP/assets/83876261/fb5c10c9-bf36-4004-9ed0-3a3d7cba2873)
+- Remove DC component. 
+-----
