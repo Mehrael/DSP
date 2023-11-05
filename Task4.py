@@ -7,8 +7,10 @@ from ImpFunctions import *
 import numpy as np
 from Signals.Task4.signalcompare import *
 import warnings
+
 # filter out all warnings
 warnings.filterwarnings("ignore")
+
 
 def Task4_screen():
     root = Toplevel()
@@ -26,11 +28,11 @@ def Task4_screen():
            # command=lambda: set_signals(function.get(), num.get())
            ).pack(padx=10, pady=10)
 
-    Button(root, text='Signal Reconstruction using IDFT', command=lambda: set_signals(2,0)).pack(padx=10, pady=10)
+    Button(root, text='Signal Reconstruction using IDFT', command=lambda: set_signals(2, 0)).pack(padx=10, pady=10)
 
 
 def set_signals(op, Fs):
-    if op == 1: #DFT
+    if op == 1:  # DFT
         msg = ""
         try:
             Fs = int(Fs)
@@ -46,30 +48,29 @@ def set_signals(op, Fs):
         index, sample = open_file('Signals/Task4/DFT/input_Signal_DFT.txt')
         # print('index: ', index)
         # print('sample: ', sample)
-        I_DFT(sample, Fs,False)
+        I_DFT(sample, Fs, False)
         # print(dft)
 
-    elif op == 2: #IDFT
-        amp, phase= special_open_file(',','Signals/Task4/IDFT/Input_Signal_IDFT_A,Phase.txt')
+    elif op == 2:  # IDFT
+        amp, phase = special_open_file(',', 'Signals/Task4/IDFT/Input_Signal_IDFT_A,Phase.txt')
         # print('index: ', amp)
         # print('sample: ', phase)
-        I_DFT([], 0,True,amp,phase)
+        I_DFT([], 0, True, amp, phase)
     return
 
 
-def I_DFT(x, Fs, flag,amp=[],phase=[]):
+def I_DFT(x, Fs, flag, amp=[], phase=[]):
     N = len(x)
     sample = np.zeros(N, dtype=np.complex128)
     img = -2j
 
-    if flag: #IDFT
+    if flag:  # IDFT
         img *= -1
         x = amp * (np.cos(phase) + 1j * np.sin(phase))
         # print(e)
         N = len(x)
         sample = np.zeros(N)
         index = np.zeros(N)
-
 
     for k in range(N):
         # print("-----------------------------")
@@ -85,13 +86,18 @@ def I_DFT(x, Fs, flag,amp=[],phase=[]):
         print('index: ', index)
         print('sample: ', sample)
 
-    else: #DFT
+    else:  # DFT
         amp, phase = Amp_phase(sample)
-        sketch(int(Fs), amp, "Amplitude Vs Frequency")
-        sketch(int(Fs), phase, "Phase Vs Frequency")
+        if SignalComapreAmplitude(amp):
+            print("Amplitude Test passed successfully")
+            sketch(int(Fs), amp, "Amplitude Vs Frequency")
+        if SignalComaprePhaseShift(phase):
+            print("Phase Test passed successfully")
+            sketch(int(Fs), phase, "Phase Vs Frequency")
     # print("-------------------")
     # print(amp, phase)
     # return X
+
 
 def Amp_phase(x):
     N = len(x)
@@ -105,16 +111,15 @@ def Amp_phase(x):
 
         if x[i].real < 0 and x[i].imag == 0.0:
             phase[i] *= -1
+        # amp[i] = np.round(amp[i],13)
         # print(amp[i], phase[i])
+        # print(np.around(amp[i],13))
 
     # print(amp)
     # print()
     # print(phase)
-    # if DFTSignalComapreAmplitude(amp):
-    #     print("Amplitude Test Passed")
-    # else:
-    #     print("Amplitude Test Failed")
     return amp, phase
+
 
 def sketch(F, yAxis, txt):
     N = len(yAxis)
