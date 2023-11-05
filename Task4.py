@@ -63,8 +63,13 @@ def Amp_phase(x):
 
     for i in range(N):
         amp[i] = np.sqrt(np.square(x[i].real) + np.square(x[i].imag))
-        phase[i] = np.arctan(x[i].imag / x[i].real)
+        # print("Phase: ", x[i].imag, "/",x[i].real)
+        phase[i] = np.arctan2(x[i].imag, x[i].real)
+
+        if x[i].real < 0 and x[i].imag == 0.0:
+            phase[i] *= -1
         # print(amp[i], phase[i])
+
 
     # print(amp)
     # print()
