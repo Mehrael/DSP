@@ -1,3 +1,4 @@
+import re
 from tkinter.filedialog import askopenfile
 import matplotlib.pyplot as plt
 
@@ -57,6 +58,43 @@ def open_file(path: object = None) -> object:
             x = x.split()
             index.append(int(x[0]))
             sample.append(float(x[1]))
+
+    # print("ImpFunctions: ", len(sample))
+
+    return index, sample
+
+
+def special_open_file(special='',path: object = None) -> object:
+    signalType = None
+    isPeriodic = None
+    N = 0
+    index = []
+    sample = []
+    if path is not None:
+        file=open(path, 'r')
+    else:
+        file = askopenfile(mode='r', filetypes=[('Text files', '*.txt')])
+    if file is not None:
+        content = file.readlines()
+        for i, x in enumerate(content):
+            if i == 0 and int(x) == 0:
+                signalType = 0
+                continue
+            elif i == 0 and int(x) == 1:
+                signalType = 1
+                continue
+            if i == 1 and int(x) == 0:
+                isPeriodic = False
+                continue
+            elif i == 1 and int(x) == 1:
+                isPeriodic = True
+                continue
+            if i == 2:
+                N = int(x)
+                continue
+            x = x.split(special)
+            index.append(float(re.sub(r'[^\d.-]', '', x[0])))
+            sample.append(float(re.sub(r'[^\d.-]', '', x[1])))
 
     # print("ImpFunctions: ", len(sample))
 
