@@ -86,7 +86,7 @@ def I_DFT(x, Fs, flag, amp=[], phase=[]):
         print('index: ', index)
         print('sample: ', sample)
         first_3_lines = """0
-1
+0
 8"""
         write_file("Output_IDFT.txt", first_3_lines, index, sample)
     else:  # DFT
