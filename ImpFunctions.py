@@ -99,3 +99,12 @@ def special_open_file(special='',path: object = None) -> object:
     # print("ImpFunctions: ", len(sample))
 
     return index, sample
+
+def write_file(file_name, first_3_lines, list1, list2):
+    with open(file_name, "w") as file:
+        file.write(first_3_lines)
+
+        for num1, num2 in zip(list1, list2):
+            file.write(f"\n{num1} {num2}")
+
+    print(f"File '{file_name}' has been created with the specified content.")

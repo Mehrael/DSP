@@ -72,20 +72,23 @@ def I_DFT(x, Fs, flag, amp=[], phase=[]):
         sample = np.zeros(N)
         index = np.zeros(N)
 
-    for k in range(N):
+    for n in range(N):
         # print("-----------------------------")
-        for n in range(N):
-            sample[k] += x[n] * round(np.exp(-2j * np.pi * k * n / N), 13)
+        for k in range(N):
+            sample[n] += x[k] * round(np.exp(img * np.pi * k * n / N), 13)
         #     print("N: ",n," ,X[",k,"]: ",X[k])
         # print("X[",k,"]: ",X[k])
         if flag:
-            index[k] = k
-            sample[k] /= N
+            index[n] = n
+            sample[n] /= N
 
     if flag:
         print('index: ', index)
         print('sample: ', sample)
-
+        first_3_lines = """0
+1
+8"""
+        write_file("Output_IDFT.txt", first_3_lines, index, sample)
     else:  # DFT
         amp, phase = Amp_phase(sample)
         if SignalComapreAmplitude(amp):
@@ -94,6 +97,11 @@ def I_DFT(x, Fs, flag, amp=[], phase=[]):
         if SignalComaprePhaseShift(phase):
             print("Phase Test passed successfully")
             sketch(int(Fs), phase, "Phase Vs Frequency")
+
+        first_3_lines = """0
+1
+8"""
+        write_file("Output_DFT.txt",first_3_lines,amp,phase)
     # print("-------------------")
     # print(amp, phase)
     # return X
