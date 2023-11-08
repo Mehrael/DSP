@@ -16,14 +16,15 @@ def SignalComapreAmplitude(SignalInput=[], SignalOutput=[64, 20.9050074380220, 1
                 print("abs(SignalInput[i]-SignalOutput[i])>0.001", i, SignalInput[i], SignalOutput[i],
                       abs(SignalInput[i] - SignalOutput[i]))
                 return False
-            # A = round(SignalInput[i])
-            # B = round(SignalOutput[i])
-            # if A != B:
-            #     print("A != B", i, A, B)
+            A = round(SignalInput[i])
+            B = round(SignalOutput[i])
+            if A != B:
+                print("A != B", i, A, B)
+                return False
+            # elif SignalInput[i]!=SignalOutput[i]:
+            #     print("SignalInput[i] != SignalOutput[i]", i, SignalInput[i], SignalOutput[i])
             #     return False
-            elif SignalInput[i]!=SignalOutput[i]:
-                print("SignalInput[i] != SignalOutput[i]", i, SignalInput[i], SignalOutput[i])
-            return False
+            # print("Iterator:",i)
         return True
 
 

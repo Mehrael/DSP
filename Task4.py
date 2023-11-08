@@ -163,6 +163,9 @@ def sketch(F, yAxis, txt):
 
 
 def modify_screen():
+    if options_amp == [] and options_phase == []:
+        msgbx.showerror(title="Error", message="You must get the DFT first", )
+        return
     window = Toplevel()
     window.title("Modify Signal")
     window.geometry('300x400')
@@ -178,9 +181,7 @@ def modify_screen():
     amp_val = tkinter.Entry(window)
     amp_val.pack(padx=5, pady=5)
 
-    Button(window, text='Modify Amplitude',
-           command=lambda: modify_signal(1, int(amp_val.get()), chosen_amp.get())
-           ).pack(padx=10, pady=10)
+    Button(window, text='Modify Amplitude', command=lambda: modify_signal(1, amp_val.get(), chosen_amp.get())).pack(padx=10, pady=10)
 
     tkinter.Label(window, text="Choose the phase shift point to modify:").pack()
     OptionMenu(window, chosen_phase, *options_phase).pack(side=TOP, padx=10, pady=5)
@@ -189,12 +190,20 @@ def modify_screen():
     phase_val = tkinter.Entry(window)
     phase_val.pack(padx=5, pady=5)
 
-    Button(window, text='Modify Phase',
-           command=lambda: modify_signal(0, int(phase_val.get()), chosen_phase.get())
-           ).pack(padx=10, pady=10)
+    Button(window, text='Modify Phase',command=lambda: modify_signal(0, phase_val.get(), chosen_phase.get())).pack(padx=10, pady=10)
 
 
 def modify_signal(choice, value, point):
+    msg = ""
+    try:
+        value = float(value)
+    except:
+        msg += "The new value Must be a Float value"
+
+    if msg != "":
+        msgbx.showerror(title="Error", message=msg, )
+        return
+
     if choice == 1:
         amp_modified[:] = [value if x == point else x for x in amp_to_modify]
         print('Before:', amp_to_modify)
