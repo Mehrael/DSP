@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 def draw_signal(index, sample, text):
 
     fig, axs = plt.subplots(1, 2)
-    fig.suptitle(text, fontsize=30)
+    fig.suptitle(text, fontsize=20)
     axs[0].set_title('Discrete Signal')
     for (i, j) in zip(index, sample):
         axs[0].plot([i, i], [0, j], color='red')
