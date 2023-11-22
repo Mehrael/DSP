@@ -37,7 +37,7 @@ def Task4_screen():
 
     Button(root, text='Signal Reconstruction using IDFT', command=lambda: set_signals(2, 0)).pack(padx=10, pady=10)
 
-    Button(root, text='DCT', command=lambda: Task5_screen()).pack(side=TOP, padx=10, pady=10)
+    Button(root, text='DCT & Remove DC', command=lambda: Task5_screen()).pack(side=TOP, padx=10, pady=10)
 
 
 def set_signals(op, Fs):
