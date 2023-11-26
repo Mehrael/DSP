@@ -2,6 +2,7 @@ from Task1 import *
 from Task2 import *
 from Task3 import *
 from Task4 import *
+from Task6 import *
 
 root = Tk()
 root.title('Main Screen')
