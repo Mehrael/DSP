@@ -30,8 +30,19 @@ framework includes a menu named Frequency Domain that includes the following fea
 - The frequency components should be saved in txt file in polar form (amplitude and phase). 
 - The ability to read a txt file that contains frequency components in polar form and reconstructing the signal by IDFT.
 ----
-Frequency domain menu includes the following features:   
 - Computing DCT for a given input, display the result and the user can choose the first m coefficients to be saved in txt file. 
   ![image](https://github.com/Mehrael/DSP/assets/83876261/fb5c10c9-bf36-4004-9ed0-3a3d7cba2873)
 - Remove DC component. 
+-----
+framework includes a menu named Time Domain that includes the following features:   
+- Smoothing: Compute moving average y(n) for signal x(n) let the user enter the number of points included in averaging.   
+- Sharpening: Compute and display y(n) which represents   
+  - First Derivative of input signal: Y(n) = x(n)-x(n-1)   
+  - Second derivative of input signal: Y(n)= x(n+1)-2x(n)+x(n-1)   
+- Delaying or advancing a signal by k steps.   
+- Folding a signal.
+- Delaying or advancing a folded signal.
+- Remove the DC component in frequency domain.
+-----
+- The ability to convolve two signals.
 -----
