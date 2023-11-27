@@ -9,15 +9,29 @@ from Signals.Task6.Shifting_and_Folding.Shift_Fold_Signal import *
 from Signals.Task6.Derivative.DerivativeSignal import *
 import numpy as np
 import matplotlib.pyplot as plt
-
+from comparesignals import *
 def Task6_screen():
     root = Toplevel()
     root.title("Time Domain")
-    root.geometry('300x200')
+    root.geometry('300x300')
     # fold = IntVar()
     # Radiobutton(root, text="Fold ?", variable=fold, value=1, command=lambda: fold.get()).pack(padx=5, pady=5)
     # Button(root,text='Choose Input File',command= lambda:open_file()).pack(padx=5, pady=5)
-    Button(root,text='Sharpening',command= lambda:Sharpening()).pack(padx=5, pady=5)
+
+    tkinter.Label(root, text="Window Size").pack()
+
+    win_size = tkinter.Entry(root)
+    win_size.pack(padx=5, pady=5)
+
+    tkinter.Label(root, text="Choose a signal").pack()
+
+    testCase = IntVar(value=0)
+    Radiobutton(root, text="Signal 1", variable=testCase, value=1, command=lambda: testCase.get()).pack(padx=5, pady=5)
+    Radiobutton(root, text="Signal 2", variable=testCase, value=2, command=lambda: testCase.get()).pack(padx=5, pady=5)
+
+    Button(root, text='Smoothing', command=lambda: Smoothing(win_size.get(),testCase.get())).pack(side=TOP, padx=10, pady=10)
+
+    Button(root,text='Sharpening',command= lambda:Sharpening()).pack(padx=10, pady=10)
 
 
 
@@ -75,3 +89,44 @@ def Sharpening():
 
     plt.tight_layout()
     plt.show()
+
+
+def moving_average(x, window_size):
+    cumsum = np.cumsum(np.insert(x, 0, 0))
+    return (cumsum[window_size:].astype(float) - cumsum[:-window_size].astype(float)) / window_size
+
+def Smoothing(win_size,testCase):
+    msg = ""
+    try:
+        win_size = int(win_size)
+        if win_size == 0 or win_size%2 == 0:
+            raise ValueError
+    except:
+        msg += "The number Must be an Odd value and not 0"
+
+    try:
+        testCase = int(testCase)
+        if testCase == 0:
+            raise ValueError
+    except:
+        msg += "\nPlease select a signal"
+
+    if msg != "":
+        msgbx.showerror(title="Error", message=msg, )
+        return
+
+    if testCase == 1: # Test 1:
+        index, sample = open_file('Signals/Task2/input signals/Signal1.txt')
+        # print(sample)
+        output = moving_average(sample,win_size)
+        # print(output)
+        file_name = 'Signals/Task6/Moving Average/OutMovAvgTest1.txt'
+
+    elif testCase == 2:
+        index, sample = open_file('Signals/Task2/input signals/Signal2.txt')
+        # print(sample)
+        output = moving_average(sample, win_size)
+        # print(output)
+        file_name = 'Signals/Task6/Moving Average/OutMovAvgTest2.txt'
+
+    SignalSamplesAreEqual(file_name,index,output)
