@@ -53,7 +53,7 @@ def Sharpening():
     # print("First Derivative: ",first_derivative)
 
     # second derivative y(n) = x(n+1) - 2*x(n) + x(n-1)
-    second_derivative = np.diff(x, n=2,prepend=0)
+    second_derivative = np.diff(x, n=2)
     # print("Second Derivative: ",second_derivative)
 
     DerivativeSignal(first_derivative,second_derivative)
