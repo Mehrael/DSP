@@ -1,15 +1,7 @@
-import statistics
-import math
-import tkinter
-from tkinter import *
-from tkinter.ttk import *
 import tkinter.messagebox as msgbx
-from ImpFunctions import *
 from Signals.Task6.Shifting_and_Folding.Shift_Fold_Signal import *
 from Signals.Task6.Derivative.DerivativeSignal import *
-import numpy as np
-import matplotlib.pyplot as plt
-from comparesignals import *
+from Task4 import *
 def Task6_screen():
     root = Toplevel()
     root.title("Time Domain")
@@ -33,6 +25,7 @@ def Task6_screen():
 
     Button(root,text='Sharpening',command= lambda:Sharpening()).pack(padx=10, pady=10)
 
+    Button(root,text='Remove DC',command= lambda:Remove_DC()).pack(padx=10, pady=10)
 
 
 def folding(index, sample):
@@ -129,4 +122,18 @@ def Smoothing(win_size,testCase):
         # print(output)
         file_name = 'Signals/Task6/Moving Average/OutMovAvgTest2.txt'
 
-    SignalSamplesAreEqual(file_name,index,output)
+    SignalSamplesAreEqual(file_name,output)
+
+
+def Remove_DC():
+    index, sample = open_file('Signals/Task5/Remove DC component/DC_component_input.txt')
+    # print("Samples: ",sample)
+    amp, phase = I_DFT(sample,0,False)
+    amp[0] = 0
+    phase[0] = 0
+    # print("Amp: ",amp)
+    # print("Phase: ",phase)
+    new_index,new_sample = I_DFT([],0,True,amp,phase)
+    # print("New Samples: ",new_sample)
+
+    SignalSamplesAreEqual('Signals/Task5/Remove DC component/DC_component_output.txt',new_sample)

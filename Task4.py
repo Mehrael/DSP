@@ -91,28 +91,31 @@ def I_DFT(x, Fs, flag, amp=[], phase=[]):
         # print("X[",k,"]: ",X[k])
         if flag:
             index[n] = np.round(n)
-            sample[n] = np.round(sample[n] / N)
+            # sample[n] = np.round(sample[n] / N)
+            sample[n] = sample[n] / N
 
     if flag:  # IDFT -> output is in the frequency domain 0 0 len
-        print('index: ', index)
-        print('sample: ', sample)
-        first_3_lines = """0
-0
-""" + str(len(sample))
-        write_file("Output_IDFT.txt", first_3_lines, index, sample)
+#         print('index: ', index)
+#         print('sample: ', sample)
+#         first_3_lines = """0
+# 0
+# """ + str(len(sample))
+#         write_file("Output_IDFT.txt", first_3_lines, index, sample)
+        return index, sample
     else:  # DFT -> output is in the time domain 0 1 len
         amp, phase = Amp_phase(sample)
-        if SignalComapreAmplitude(amp):
-            print("Amplitude Test passed successfully")
-            sketch(int(Fs), amp, "Amplitude Vs Frequency")
-        if SignalComaprePhaseShift(phase):
-            print("Phase Test passed successfully")
-            sketch(int(Fs), phase, "Phase Vs Frequency")
+        # if SignalComapreAmplitude(amp):
+        #     print("Amplitude Test passed successfully")
+        #     sketch(int(Fs), amp, "Amplitude Vs Frequency")
+        # if SignalComaprePhaseShift(phase):
+        #     print("Phase Test passed successfully")
+        #     sketch(int(Fs), phase, "Phase Vs Frequency")
 
-        first_3_lines = """0
-1
-""" + str(len(sample))
-        write_file("Output_DFT.txt", first_3_lines, amp, phase)
+#         first_3_lines = """0
+# 1
+# """ + str(len(sample))
+#         write_file("Output_DFT.txt", first_3_lines, amp, phase)
+        return amp, phase
     # print("-------------------")
     # print(amp, phase)
     # return X
@@ -143,9 +146,9 @@ def Amp_phase(x):
 
     amp_to_modify[:] = amp
     options_amp[:] = list(OrderedDict.fromkeys(amp_to_modify))
-    print(options_amp)
+    # print(options_amp)
     options_phase[:] = list(OrderedDict.fromkeys(phase_to_modify))
-    print(options_phase)
+    # print(options_phase)
     phase_to_modify[:] = phase
 
     return amp, phase
