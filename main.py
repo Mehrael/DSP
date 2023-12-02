@@ -3,6 +3,7 @@ from Task2 import *
 from Task3 import *
 from Task4 import *
 from Task6 import *
+from Task7 import *
 
 root = Tk()
 root.title('Main Screen')
@@ -34,6 +35,7 @@ Button(root, text='Frequency Domain', command=lambda: Task4_screen()).pack(side=
 
 Button(root, text='Time Domain', command=lambda: Task6_screen()).pack(side=TOP, padx=10, pady=10)
 
+Button(root, text='Convolution', command=lambda: Task7_screen()).pack(side=TOP, padx=10, pady=10)
 
 mainloop()
 # print(len(sample_signal[0]))
