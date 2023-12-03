@@ -43,15 +43,12 @@ def convolution():
     conv_sample = []
     start, end = get_boundaries()
     for n in range(start, end + 1):
-        # lw bazet heya de el sabab
         acc = 0
-        for k in range(min(signal_index_1), max(signal_index_1)):
-            if k not in signal_index_1 or (n - k) not in signal_index_2:
-                print('-------------------------')
-                print('Accumulator:', acc)
-                print('k:', k)
-                print('n:', n)
+        for k in range(min(signal_index_1), end+1):
+            if k not in signal_index_1:
                 break
+            elif (n - k) not in signal_index_2:
+                continue
             else:
                 i1 = signal_index_1.index(k)
                 i2 = signal_index_2.index(n - k)
@@ -64,16 +61,4 @@ def convolution():
     ConvTest(conv_index, conv_sample)
     print('Index:', conv_index)
     print('Sample:', conv_sample)
-    # len_x = len(signal_samples_1)
-    # len_h = len(signal_samples_2)
-    # conv_result = [0] * (len_x + len_h - 1)
-    #
-    # for n in range(start, end+1):
-    #     for k in range(max(0, n - len_h + 1), min(len_x, n + 1)):
-    #         conv_result[n] += signal_samples_1[k] * signal_samples_2[n - k]
-    #     conv_index.append(n)
-    # conv_sample[:]=conv_result
-    # print('Indices: ', conv_index)
-    # print('Sample: ', conv_sample)
-    # ConvTest(conv_index,conv_sample)
     return
