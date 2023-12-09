@@ -46,3 +46,5 @@ framework includes a menu named Time Domain that includes the following features
 -----
 - The ability to convolve two signals.
 -----
+- Compute normalized cross correlation of two signals.
+-----
