@@ -9,6 +9,7 @@ from Signals.Task4.signalcompare import *
 import warnings
 from collections import OrderedDict
 from Task5 import *
+from Task9 import *
 
 # filter out all warnings
 warnings.filterwarnings("ignore")
@@ -24,7 +25,7 @@ freq_sampling = 0
 def Task4_screen():
     root = Toplevel()
     root.title("Frequency Domain")
-    root.geometry('300x300')
+    root.geometry('300x350')
 
     tkinter.Label(root, text="Sampling Frequency in Hz").pack()
 
@@ -38,6 +39,10 @@ def Task4_screen():
     Button(root, text='Signal Reconstruction using IDFT', command=lambda: set_signals(2, 0)).pack(padx=10, pady=10)
 
     Button(root, text='DCT & Remove DC', command=lambda: Task5_screen()).pack(side=TOP, padx=10, pady=10)
+
+    Button(root, text='Fast Convolution', command=lambda: fast_convolution()).pack(side=TOP, padx=10, pady=10)
+
+    Button(root, text='Fast Correlation', command=lambda: fast_correlation()).pack(side=TOP, padx=10, pady=10)
 
 
 def set_signals(op, Fs):
