@@ -1,9 +1,3 @@
-import math
-import tkinter
-from tkinter import *
-from tkinter.ttk import *
-import tkinter.messagebox as msgbx
-from ImpFunctions import *
 from Task4 import *
 
 
@@ -17,13 +11,22 @@ def fast_convolution():
     padding_val = N1 + N2 - 1
 
     padded_sample1 = sample1 + [0.0] * (padding_val - N1)
+    padded_index1 = index1
+
+    for i in range(N1, padding_val):
+        padded_index1.append(padded_index1[-1] +1)
+
     padded_sample2 = sample2 + [0.0] * (padding_val - N2)
+    padded_index2 = index2
+
+    for i in range(N2, padding_val):
+        padded_index2.append(padded_index2[-1] + 1)
 
     amp1, phase1 = I_DFT(padded_sample1,0,False)
     amp2, phase2 = I_DFT(padded_sample2,0,False)
 
     # ToDo:
-    #  padding index lists
+    #  Nsh3'al al DFT
     #  use convolution function
     #  apply IDFT
 
