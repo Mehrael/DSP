@@ -48,3 +48,7 @@ framework includes a menu named Time Domain that includes the following features
 -----
 - Compute normalized cross correlation of two signals.
 -----
+Adding to Frequency Domain menu the following features:
+- Fast Convolution.
+- Fast Correlation.
+-----
