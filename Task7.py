@@ -8,9 +8,9 @@ def get_boundaries(signal_index_1, signal_index_2):
     return min_bound, max_bound
 
 
-def convolution():
-    signal_index_1, signal_samples_1 = open_file('Signals/Task6/Convolution/Input_conv_Sig1.txt')
-    signal_index_2, signal_samples_2 = open_file('Signals/Task6/Convolution/Input_conv_Sig2.txt')
+def convolution(signal_index_1, signal_samples_1,signal_index_2, signal_samples_2):
+    # signal_index_1, signal_samples_1 = open_file('Signals/Task6/Convolution/Input_conv_Sig1.txt')
+    # signal_index_2, signal_samples_2 = open_file('Signals/Task6/Convolution/Input_conv_Sig2.txt')
     conv_index = []
     conv_sample = []
     start, end = get_boundaries(signal_index_1, signal_index_2)
@@ -28,4 +28,5 @@ def convolution():
 
         conv_index.append(n)
         conv_sample.append(acc)
-    ConvTest(conv_index, conv_sample)
+    # ConvTest(conv_index, conv_sample)
+    return conv_index, conv_sample
