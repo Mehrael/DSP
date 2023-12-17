@@ -1,7 +1,17 @@
-from Task4 import *
+import math
+import tkinter
+from tkinter import *
+from tkinter.ttk import *
+import tkinter.messagebox as msgbx
+from ImpFunctions import *
+import numpy as np
+import warnings
+from collections import OrderedDict
+
 
 
 def fast_convolution():
+    from Task4 import I_DFT as DFT_IDFT
     index1, sample1 = open_file("Signals/Task9/Convolution/Input_conv_Sig1.txt")
     index2, sample2 = open_file("Signals/Task9/Convolution/Input_conv_Sig2.txt")
 
@@ -10,25 +20,25 @@ def fast_convolution():
 
     padding_val = N1 + N2 - 1
 
-    padded_sample1 = sample1 + [0.0] * (padding_val - N1)
-    padded_index1 = index1
+    index1, sample1= padding(padding_val, N1,index1,sample1)
+    index2, sample2= padding(padding_val, N2,index2,sample2)
 
-    for i in range(N1, padding_val):
-        padded_index1.append(padded_index1[-1] +1)
+    amp1, phase1 = DFT_IDFT(sample1,0,False,[],[])
+    amp2, phase2 = DFT_IDFT(sample2,0,False,[],[])
 
-    padded_sample2 = sample2 + [0.0] * (padding_val - N2)
-    padded_index2 = index2
-
-    for i in range(N2, padding_val):
-        padded_index2.append(padded_index2[-1] + 1)
-
-    amp1, phase1 = I_DFT(padded_sample1,0,False)
-    amp2, phase2 = I_DFT(padded_sample2,0,False)
 
     # ToDo:
     #  Nsh3'al al DFT
     #  use convolution function
     #  apply IDFT
 
+def padding(N, lst_size, index, sample):
+
+    for i in range(lst_size, N):
+        index.append(index[-1] + 1)
+
+    sample = sample + [0.0] * (N - lst_size)
+
+    return index, sample
 def fast_correlation():
     return
