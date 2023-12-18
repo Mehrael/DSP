@@ -11,8 +11,8 @@ isPeriodic = None
 N = 0
 index = []
 sampleAmp = []
-SinFile = 'SinOutput.txt'
-CosFile = 'CosOutput.txt'
+SinFile = "Signals/Sin_Cos/SinOutput.txt"
+CosFile = "Signals/Sin_Cos/CosOutput.txt"
 
 
 def part1():
