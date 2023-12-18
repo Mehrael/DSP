@@ -1,7 +1,7 @@
 import numpy as np
 from Task7 import *
 from Signals.Task9.Convolution.ConvTest import ConvTest
-
+from Signals.Task9.FastCorrelation.CompareSignal import Compare_Signals
 def fast_convolution():
     index1, sample1 = open_file("Signals/Task9/Convolution/Input_conv_Sig1.txt")
     index2, sample2 = open_file("Signals/Task9/Convolution/Input_conv_Sig2.txt")
@@ -44,4 +44,22 @@ def IDFT(x):
 
     return sample
 def fast_correlation():
-    return
+    index1, sample1 = open_file("Signals/Task9/FastCorrelation/Corr_input signal1.txt")
+    index2, sample2 = open_file("Signals/Task9/FastCorrelation/Corr_input signal2.txt")
+
+    N = len(sample1)
+
+    sample1 = DFT(sample1)
+    sample2 = DFT(sample2)
+
+    conj = np.zeros(N, dtype=np.complex128)
+    for i in range(N):
+        conj[i] = sample1[i].real -1j * sample1[i].imag
+
+    mul = conj * sample2
+
+    res = IDFT(mul)
+
+    res /= N
+
+    Compare_Signals("Signals/Task9/FastCorrelation/Corr_Output.txt",index1,res)
