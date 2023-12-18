@@ -1,7 +1,6 @@
 from Task1 import *
 from Task2 import *
 from Task3 import *
-from Task4 import *
 from Task6 import *
 from Task7 import *
 from Task8 import *
@@ -41,23 +40,3 @@ Button(root, text='Convolution', command=lambda: convolution()).pack(side=TOP, p
 Button(root, text='Correlation', command=lambda: correlation()).pack(side=TOP, padx=10, pady=10)
 
 mainloop()
-# print(len(sample_signal[0]))
-# print(len(sample))
-# print(min(sample))
-# print("Sample:")
-# print(sample)
-# print('Interval Start:')
-# print(interval_start)
-# print('Interval End:')
-# print(interval_end)
-# print('Interval Midpoint:')
-# print(interval_midpoint)
-# print('-------------------------------')
-# print('Quantized Signal:')
-# print(quantized)
-# print('Encoded index:')
-# print(encoded)
-# print('Interval Index:')
-# print(interval_index)
-# print('Error:')
-# print(error)

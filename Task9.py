@@ -1,5 +1,5 @@
 import numpy as np
-from Task7 import *
+from ImpFunctions import *
 from Signals.Task9.Convolution.ConvTest import ConvTest
 from Signals.Task9.FastCorrelation.CompareSignal import Compare_Signals
 
@@ -14,8 +14,8 @@ def fast_convolution():
 
     N = N1 + N2 - 1
 
-    sample1 = sample1 + [0.0] * (N - N1)
-    sample2 = sample2 + [0.0] * (N - N2)
+    index1, sample1= padding(N, N1,index1,sample1)
+    index2, sample2= padding(N, N2,index2,sample2)
 
     sample1 = DFT_IDFT(sample1, 0, False, 9)
     sample2 = DFT_IDFT(sample2, 0, False, 9)
@@ -26,7 +26,14 @@ def fast_convolution():
 
     ConvTest(index1, result)
 
+def padding(N, lst_size, index, sample):
 
+    for i in range(lst_size, N):
+        index.append(index[-1] + 1)
+
+    sample = sample + [0.0] * (N - lst_size)
+
+    return index, sample
 def fast_correlation():
     from Task4 import I_DFT as DFT_IDFT
     index1, sample1 = open_file("Signals/Task9/FastCorrelation/Corr_input signal1.txt")
