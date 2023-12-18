@@ -64,66 +64,67 @@ def set_signals(op, Fs):
         index, sample = open_file('Signals/Task4/DFT/input_Signal_DFT.txt')
         # print('index: ', index)
         # print('sample: ', sample)
-        I_DFT(sample, Fs, False)
+        I_DFT(sample, Fs, False, 4)
         # print(dft)
 
     elif op == 2:  # IDFT
         amp, phase = special_open_file(',', 'Signals/Task4/IDFT/Input_Signal_IDFT_A,Phase.txt')
         # print('index: ', amp)
         # print('sample: ', phase)
-        I_DFT([], 0, True, amp, phase)
+        I_DFT([], 0, True, 4, amp, phase)
     return
 
 
-def I_DFT(x, Fs, flag, amp=[], phase=[]):
+def I_DFT(x, Fs, flag, task, amp=[], phase=[]):
     N = len(x)
     sample = np.zeros(N, dtype=np.complex128)
     img = -2j
 
     if flag:  # IDFT
         img *= -1
-        x = amp * (np.cos(phase) + 1j * np.sin(phase))
-        # print(e)
-        N = len(x)
         sample = np.zeros(N)
-        index = np.zeros(N)
+        if not task == 9:
+            x = amp * (np.cos(phase) + 1j * np.sin(phase))
+            index = np.zeros(N)
 
     for n in range(N):
-        # print("-----------------------------")
         for k in range(N):
             sample[n] += x[k] * np.exp(img * np.pi * k * n / N)
-        #     print("N: ",n," ,X[",k,"]: ",X[k])
-        # print("X[",k,"]: ",X[k])
         if flag:
-            index[n] = np.round(n)
+            if not task == 9:
+                index[n] = np.round(n)
             # sample[n] = np.round(sample[n] / N)
             sample[n] = sample[n] / N
 
     if flag:  # IDFT -> output is in the frequency domain 0 0 len
-#         print('index: ', index)
-#         print('sample: ', sample)
-#         first_3_lines = """0
-# 0
-# """ + str(len(sample))
-#         write_file("Output_IDFT.txt", first_3_lines, index, sample)
-        return index, sample
-    else:  # DFT -> output is in the time domain 0 1 len
-        amp, phase = Amp_phase(sample)
-        # if SignalComapreAmplitude(amp):
-        #     print("Amplitude Test passed successfully")
-        #     sketch(int(Fs), amp, "Amplitude Vs Frequency")
-        # if SignalComaprePhaseShift(phase):
-        #     print("Phase Test passed successfully")
-        #     sketch(int(Fs), phase, "Phase Vs Frequency")
+        if task == 4:
+            first_3_lines = """0
+0
+""" + str(len(sample))
+            write_file("Output_IDFT.txt", first_3_lines, index, sample)
+        elif task == 6:
+            return index, sample
+        elif task == 9:
+            return sample
 
-#         first_3_lines = """0
-# 1
-# """ + str(len(sample))
-#         write_file("Output_DFT.txt", first_3_lines, amp, phase)
-        return amp, phase
-    # print("-------------------")
-    # print(amp, phase)
-    # return X
+    else:  # DFT -> output is in the time domain 0 1 len
+        if task == 9:
+            return sample
+        amp, phase = Amp_phase(sample)
+        if task == 4:
+            if SignalComapreAmplitude(amp):
+                print("Amplitude Test passed successfully")
+                sketch(int(Fs), amp, "Amplitude Vs Frequency")
+            if SignalComaprePhaseShift(phase):
+                print("Phase Test passed successfully")
+                sketch(int(Fs), phase, "Phase Vs Frequency")
+
+            first_3_lines = """0
+1
+""" + str(len(sample))
+            write_file("Output_DFT.txt", first_3_lines, amp, phase)
+        elif task == 6:
+            return amp, phase
 
 
 def Amp_phase(x):
@@ -134,7 +135,7 @@ def Amp_phase(x):
 
     for i in range(N):
         amp[i] = math.sqrt((x[i].real ** 2) + (x[i].imag ** 2))
-        # print("Phase: ", x[i].imag, "/",x[i].real)
+
         phase[i] = np.arctan2(x[i].imag, x[i].real)
 
         if x[i].real < 0 and x[i].imag == 0.0:
@@ -142,18 +143,12 @@ def Amp_phase(x):
         amp[i] = np.round(amp[i], 13)
         phase[i] = np.round(phase[i], 13)
         phase_to_modify[i] = abs(phase[i])
-        # print(amp[i], phase[i])
-        # print(np.around(amp[i],13))
-
-    # print(amp)
-    # print()
-    # print(phase)
 
     amp_to_modify[:] = amp
     options_amp[:] = list(OrderedDict.fromkeys(amp_to_modify))
-    # print(options_amp)
+
     options_phase[:] = list(OrderedDict.fromkeys(phase_to_modify))
-    # print(options_phase)
+
     phase_to_modify[:] = phase
 
     return amp, phase
@@ -165,7 +160,6 @@ def sketch(F, yAxis, txt):
     xAxis = np.zeros(N)
     # Ts = 1 / F
     # funF2 = (2 * np.pi) / (N * Ts)
-    # print(funF, funF2)
 
     for i in range(N):
         xAxis[i] += funF * (1 + i)
@@ -192,7 +186,8 @@ def modify_screen():
     amp_val = tkinter.Entry(window)
     amp_val.pack(padx=5, pady=5)
 
-    Button(window, text='Modify Amplitude', command=lambda: modify_signal(1, amp_val.get(), chosen_amp.get())).pack(padx=10, pady=10)
+    Button(window, text='Modify Amplitude', command=lambda: modify_signal(1, amp_val.get(), chosen_amp.get())).pack(
+        padx=10, pady=10)
 
     tkinter.Label(window, text="Choose the phase shift point to modify:").pack()
     OptionMenu(window, chosen_phase, *options_phase).pack(side=TOP, padx=10, pady=5)
@@ -201,7 +196,8 @@ def modify_screen():
     phase_val = tkinter.Entry(window)
     phase_val.pack(padx=5, pady=5)
 
-    Button(window, text='Modify Phase',command=lambda: modify_signal(0, phase_val.get(), chosen_phase.get())).pack(padx=10, pady=10)
+    Button(window, text='Modify Phase', command=lambda: modify_signal(0, phase_val.get(), chosen_phase.get())).pack(
+        padx=10, pady=10)
 
 
 def modify_signal(choice, value, point):

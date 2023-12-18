@@ -194,12 +194,12 @@ def Smoothing(win_size, testCase):
 def Remove_DC():
     index, sample = open_file('Signals/Task5/Remove DC component/DC_component_input.txt')
     # print("Samples: ",sample)
-    amp, phase = I_DFT(sample, 0, False)
+    amp, phase = I_DFT(sample, 0, False, 6)
     amp[0] = 0
     phase[0] = 0
     # print("Amp: ",amp)
     # print("Phase: ",phase)
-    new_index, new_sample = I_DFT([], 0, True, amp, phase)
+    new_index, new_sample = I_DFT([], 0, True,6,amp, phase)
     # print("New Samples: ",new_sample)
 
     SignalSamplesAreEqual('Signals/Task5/Remove DC component/DC_component_output.txt', new_sample)
