@@ -40,6 +40,7 @@ def fast_correlation():
     index2, sample2 = open_file("Signals/Task9/FastCorrelation/Corr_input signal2.txt")
 
     N = len(sample1)
+    N2 = len(sample2)
 
     sample1 = DFT_IDFT(sample1, 0, False, 9)
     sample2 = DFT_IDFT(sample2, 0, False, 9)
@@ -52,6 +53,8 @@ def fast_correlation():
 
     res = DFT_IDFT(mul, 0, True, 9)
 
-    res /= N
+    if N == N2: # Cross Correlation
+        res /= N
+    # else it's already Auto Correlation
 
     Compare_Signals("Signals/Task9/FastCorrelation/Corr_Output.txt", index1, res)
