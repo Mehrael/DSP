@@ -78,48 +78,31 @@ def create_intervals():
 
 def quantize(op, num):
     for x, value in enumerate(sample):
-        start = -1
+        interval = -1
         for i in range(len(interval_start)):
             if interval_start[i] < value <= interval_end[i]:
-                start = i
+                interval = i
                 break
 
-        if start == -1:
+        if interval == -1:
             for i in range(len(interval_start)):
                 if interval_start[i] <= value < interval_end[i]:
-                    start = i
+                    interval = i
                     break
 
-        quantized.append(interval_midpoint[start])
+        quantized.append(interval_midpoint[interval])
         error.append(round(quantized[x] - value, 3))
-        interval_index.append(start + 1)
+        interval_index.append(interval + 1)
         if op == 1:
-            encoded.append(bin(start)[2:].zfill(int(num)))
+            # encoding for no. of levels
+            encoded.append(bin(interval)[2:].zfill(int(num)))
         else:
-            encoded.append(bin(start)[2:].zfill(int(math.log2(float(num)))))
+            # encoding for no. of bits
+            encoded.append(bin(interval)[2:].zfill(int(math.log2(float(num)))))
     if op == 1:
         QuantizationTest1('Signals/Task3/Test1/Quan1_Out.txt', encoded, quantized)
     else:
         QuantizationTest2('Signals/Task3/Test2/Quan2_Out.txt', interval_index, encoded, quantized, error)
-    # print('-------------------------------------')
-    # print('-------------------------------------')
-    # print("Sample:")
-    # print(sample)
-    # print('Interval Start:')
-    # print(interval_start)
-    # print('Interval End:')
-    # print(interval_end)
-    # print('Interval Midpoint:')
-    # print(interval_midpoint)
-    # print('-------------------------------')
-    # print('Quantized Signal:')
-    # print(quantized)
-    # print('Encoded index:')
-    # print(encoded)
-    # print('Interval Index:')
-    # print(interval_index)
-    # print('Error:')
-    # print(error)
     index.clear()
     sample.clear()
     interval_start.clear()

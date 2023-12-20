@@ -76,8 +76,17 @@ def set_signals(op, Fs):
 
 
 def I_DFT(x, Fs, flag, task, amp=[], phase=[]):
+    # performs both DFT and IDFT
+
+    # x= signal
+    # Fs= frequency sampling used in sketching
+    # flag = true -> IDFT / flag = false -> DFT
+    # task = no. of task file to run
+    # amp and phase to extract the signal that will be IDFTed
+
     N = len(x)
     sample = np.zeros(N, dtype=np.complex128)
+    # zero in complex datatype to carry the real and imaginary part of the signal
     img = -2j
 
     if flag:  # IDFT
